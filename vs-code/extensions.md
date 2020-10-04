@@ -1,7 +1,5 @@
 # Lista de extensões úteis/decorativas
 
-## Contribuições de Junior
-
 - Omni
 - Colorize
 - Material Icon Theme
@@ -13,7 +11,3 @@
 - ESLint
 - Prettier - Code Formatter
 - vscode-styled-components
-
-## Contribuições de Jaine
-
-## Contribuições de Maria
