@@ -12,11 +12,14 @@ que ninguém é obrigado a decorar. Além disso, servirá de tutorial eventualme
 
 - [Monorepo](monorepo/monorepo.md)
 
+### Web
+
+- [Styled-Components React](web/styled-components.md)
+
 ### Mobile
 
 - [React Native - Emulador](mobile/react-native-emulador.md)
 - [React Native - Erros](mobile/react-native-erros.md)
-
 
 ### Git
 
