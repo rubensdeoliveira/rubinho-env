@@ -70,7 +70,7 @@ Dentro de
 packages > shared > eslint-config
 Rodar no terminal os seguintes comandos:
 
-`yarn add @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint eslint-config-prettier eslint-config-standard eslint-import-resolver-typescript eslint-plugin-import eslint-plugin-node eslint-plugin-prettier eslint-plugin-promise eslint-plugin-react eslint-plugin-standard prettier -D`
+`yarn add @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint@6.8.0 eslint-config-prettier eslint-config-standard eslint-import-resolver-typescript eslint-plugin-import eslint-plugin-node eslint-plugin-prettier eslint-plugin-promise eslint-plugin-react eslint-plugin-standard prettier -D`
 
 ## Passo 13
 Dentro de

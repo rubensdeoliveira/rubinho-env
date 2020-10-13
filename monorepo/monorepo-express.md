@@ -31,15 +31,6 @@ rodar no terminal:
 
 `yarn add express`
 
-## Passo 5
-Verificando se esse passo é necessário
-
-Dentro de
-packages > server
-rodar no terminal:
-
-`yarn add typescript -D`
-
 ## Passo 6
 Dentro de
 packages > server
@@ -92,17 +83,6 @@ app.listen(3333, () => {
   console.log("Server stated on port 3333");
 });
 ```
-
-## Passo 10
-Verificando se esse passo é necessário
-
-Dentro de 
-packages > server > tsconfig.json
-alterar as seguintes tags para:
-
-`"outDir": "./dist",`
-
-`"rootDir": "./src",`
 
 ## Passo 11
 Dentro de 
