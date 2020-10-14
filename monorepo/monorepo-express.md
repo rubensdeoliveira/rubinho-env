@@ -599,9 +599,9 @@ Rode o servidor para ver se está tudo ok, agora que foi adicionado o banco
   $ yarn add @types/jsonwebtoken -D
 ```
 
-## Passo 39
-Acesso o [link]() e gere um código, salve esse código
-**OBS: Falta o link**
+## Acessar link 
+Acesso o [link](http://www.md5.cz/) e gere um código, salve esse código
+
 
 ## Criar arquivo sessions.routes.ts
 ```bash
