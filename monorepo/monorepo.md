@@ -1,130 +1,177 @@
 # Anotações de Monorepo
 
-## Passo 1
-Rodar no terminal na raiz:
+## Pasta raiz
 
-```yarn init -y```
-
-## Passo 2
-Adicionar em
-package.json
-as tags:
-
-```
-"private": "true",
-"workspaces": {
-  "packages": [
-    "packages/*",
-    "packages/shared/*"
-  ],
-  "nohoist": [
-    "**/jest",
-    "**/ts-jest"
-  ]
-},
+```bash
+  # Rodar no terminal da raiz:
+  $ yarn init -y
 ```
 
-## Passo 3
-Criar pasta
-packages
+## Configuração do package.json da raiz
 
-## Passo 4
-Criar arquivo
-.gitignore
-
-## Passo 5
-Dentro de
-.gitignore
-colocar:
-
-```
-node_modules
-dist
-yarn-error.log
+```bash
+  Adicionar no arquivo package.json da raiz as tags:
+  "private": "true",
+  "workspaces": {
+    "packages": [
+      "packages/*",
+      "packages/shared/*"
+    ],
+    "nohoist": [
+      "**/jest",
+      "**/ts-jest"
+    ]
+  },
 ```
 
-## Passo 6
+## Criar pasta packages
+
+``` bash
+  # criar pasta packages
+  $ mkdir packages
+```
+
+## Criar arquivo gitignore da raiz
+
+  Criar arquivo
+``` bash
+  .gitignore
+
+```
+
+## Configuração do gitignore da raiz
+
+ Abrir arquivo .gitignore da raiz e adicionar:
+```bash
+  node_modules
+  dist
+  yarn-error.log
+```
+
+## Adicionar dependência typescript
+
 Na raiz do projeto rodar no terminal:
+```bash
+ $ yarn add typescript -DW
+ ```
 
-```yarn add typescript -DW```
+## Criar pasta shared e eslint-config
 
-## Passo 7
-Criar pasta
-packages > shared > eslint-config
+``` bash
+  # Entrar na pasta packages
+  $ cd packages
+  # Dentro da pasta packages criar pasta shared
+  $ mkdir shared
+  # Entrar na pasta shared 
+  $ cd shared
+  # Dentro da pasta shared criar pasta eslint-config
+  $ mkdir eslint-config
 
-## Passo 8
-Dentro de 
-packages > shared > eslint-config
-rodar no terminal:
-
-```yarn init -y```
-
-## Passo 11
-Trocar nome do projeto para
-@NOME_DO_PROJETO/eslint-config
-em
-packages > shared > eslint-config > package.json
-
-## Passo 12
-Dentro de
-packages > shared > eslint-config
-Rodar no terminal os seguintes comandos:
-
-`yarn add @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint@6.8.0 eslint-config-prettier eslint-config-standard eslint-import-resolver-typescript eslint-plugin-import eslint-plugin-node eslint-plugin-prettier eslint-plugin-promise eslint-plugin-react eslint-plugin-standard prettier -D`
-
-## Passo 13
-Dentro de
-packages > shared > eslint-config
-rodar no terminal:
-
-`yarn`
-
-## Passo 14
-Criar arquivo
-Dentro de
-packages > eslint-config > .eslintrc.js
-
-## Passo 15
-Dentro de
-packages > eslint-config > .eslintrc.js
-colocar uma configuração que pode ser encontrada [aqui](monorepo-eslint.md)
-
-## Passo 16
-Dentro de
-packages > eslint-config > package.json
-alterar a tag main para:
-
-`"main": ".eslintrc.js",`
-
-## Passo 17
-Criar arquivo
-prettier.config.js
-na raiz do projeto mesmo
-
-## Passo 18
-dentro de
-prettier.config.js
-colocar:
-
-```
-module.exports = {
-  semi: false,
-  singleQuote: true,
-  arrowParens: 'avoid',
-  trailingComma: 'none',
-  endOfLine: 'auto'
-}
+  # Caminho das pastas
+  packages > shared > eslint-config
 ```
 
-## Passo 19
-Criar arquivo
-.eslintrc.js
-na raiz do projeto
+## Rodar yarn init -y no eslint-config
 
-## Passo 20
-Dentro de 
-package.json
-adicionar na tag devDependecies o projeto eslint-config.
+```bash
+  # Abrir pasta packages/shared/eslint-config
+  $ cd packages/shared/eslint-config
+  # Dentro da pasta eslint-config rodar no terminal
+  $ yarn init -y
+```
+
+## Alterar nome do projeto no package.json do eslint-config
+
+``` bash
+  # Abrir arquivo package.json da pasta eslint-config
+  $ cd packages/shared/eslint-config/package.json
+  # Trocar nome do projeto para:
+  @NOME_DO_PROJETO/eslint-config
+
+```
+
+## Adicionar plugins
+
+```bash
+  # Abrir a pasta eslint-config
+  $ cd packages/shared/eslint-config
+  # Rodar no terminal os seguintes comandos:
+  $ yarn add @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint@6.8.0 eslint-config-prettier eslint-config-standard eslint-import-resolver-typescript eslint-plugin-import eslint-plugin-node eslint-plugin-prettier eslint-plugin-promise eslint-plugin-react eslint-plugin-standard prettier -D
+
+```
+
+## Rodar yarn na pasta eslint-config
+
+```bash
+  # Abrir pastas packages/shared/eslint-config
+  $ cd packages/shared/eslint-config
+  # Rodar o seguinte comando no terminal:
+  $ yarn
+
+```
+
+## Criar arquivo eslintrc.js
+
+```bash
+  # Abrir as pastas packages/eslint-config
+  $ cd packages/eslint-config
+  # Criar arquivo:
+  .eslintrc.js
+
+```
+
+## Adicionar configuração no arquivo .eslintrc.js
+
+ ```bash
+  # Abrir pastas para acessar o arquivo .eslintrc.js
+  $ cd packages/eslint-config/.eslintrc.js
+  ```
+  Adicionar configuração  que se encontra : [aqui](monorepo-eslint.md)
+
+
+
+## Alterar a tag main 
+
+```bash
+  # Abrir pastas para acessar o package.json
+  $ cd packages/eslint-config/package.json
+  # alterar a tag main do package.json para:
+  `"main": ".eslintrc.js",`
+
+```
+
+## Criar arquivo prettier.config.js
+
+Na raiz do projeto criar o arquivo:
+```bash
+  prettier.config.js
+```
+
+## Adicionar configuração no prettier.config.js
+
+  No arquivo prettier.config.js adicionar:
+```bash
+  module.exports = {
+    semi: false,
+    singleQuote: true,
+    arrowParens: 'avoid',
+    trailingComma: 'none',
+    endOfLine: 'auto'
+  }
+```
+
+## Criar arquivo .eslintrc.js
+
+Na raiz do projeto criar o arquivo:
+
+```bash
+  .eslintrc.js
+
+```
+
+## Adicionar tag devDependencies
+
+No arquivo package.json adicionar na tag devDependecies o projeto eslint-config.
 Vai ficar mais ou menos assim:
 
 ```
@@ -134,49 +181,48 @@ Vai ficar mais ou menos assim:
 }
 ```
 
-## Passo 21
+## Rodar yarn na raiz
+
 Na raiz do projeto rodar no terminal:
-
-`yarn`
-
-## Passo 22
-Dentro de
-.eslintrc.js
-colocar:
-
-```
-const config = require('@NOME_DO_PROJETO/eslint-config')
-
-module.exports = config
+```bash
+  $ yarn
 ```
 
-## Passo 23
-Criar arquivo
-.eslintignore
-na raiz do projeto
+## Adicionar configuração no arquivo .eslintrc.js
 
-## Passo 24
-Dentro de
-.eslintignore
-colocar:
+  No arquivo .eslintrc.js adicionar:
 
+```bash
+  const config = require('@NOME_DO_PROJETO/eslint-config')
+
+  module.exports = config
 ```
+
+## Criar arquivo .eslintignore
+
+ Na raiz do projeto criar o arquivo:
+  .eslintignore
+
+## Adicionar configuração no arquivo .eslintignore
+
+  No arquivo .eslintignore adicionar:
+
+```bash
 .eslintrc.js
 packages/**/*.js
 node_modules
 dist
 ```
 
-## Passo 25
-Criar arquivo
-tsconfig.json
+## Criar arquivo tsconfig.json
 
-## Passo 26
-Dentro de 
-tsconfig.json
-adicionar:
+Criar arquivo tsconfig.json
 
-```
+## Adicionar configuração no arquivo tsconfig.json
+
+  No arquivo tsconfig.json adicionar:
+
+```bash
 {
   "compilerOptions": {
     "target": "es2017",
@@ -190,7 +236,8 @@ adicionar:
 }
 ```
 
-## Passo 28
+## Configurando os projetos separadamente
+
 Configure os projetos separadamente acessando os links abaixo:
 
 [server](monorepo-express.md)
@@ -198,53 +245,74 @@ Configure os projetos separadamente acessando os links abaixo:
 [Next](monorepo-next.md)
 [React Native](monorepo-react-native.md)
 
-caso precise do axios ou de testes com jest volte para esse tutorial para continuar os próximos passos.
+Caso precise do axios ou de testes com jest volte para esse tutorial para continuar os próximos passos.
 
-## Passo 29
-Criar pasta
-packages > shared > axios-config
+## Criar pasta axios-config
 
-## Passo 30
-Dentro de 
-packages > shared > axios-config
-rodar no terminal:
-
-```yarn init -y```
-
-## Passo 31
-Dentro de 
-packages > shared > axios-config > package.json
-alterar nome do projeto para
-@NOME_DO_PROJETO/axios-config
-
-## Passo 32
-Criar arquivo
-packages > shared > axios-config > index.ts
-
-## Passo 33
-Dentro de 
-packages > shared > axios-config > index.ts
-colocar:
-
+```bash
+  # Abrir pasta packages/shared
+  $ cd packages/shared
+  # Criar pasta axios-config
+  $ mkdir axios-config
 ```
-import axios from 'axios'
 
-const api = axios.create({
-  baseURL: 'http://localhost:3333'
-})
+## Rodar yarn init -y
 
-export default api
+```bash
+  # Abrir pastas packages/shared/axios-config
+  $ cd packages/shared/axios-config
+  # Rodar no terminal o  seguinte comando:
+  $ yarn init -y 
 
 ```
 
-# Passo 34
-Dentro de 
-packages > shared > axios-config > package.json
-alterar tag main para:
+## Alterar nome do projeto
 
-```"main": "index.ts",```
+```bash
+  # Abrir pastas packages/shared/axios-config/package.json para acessar o arquivo package.json
+  $ cd packages/shared/package.json
+  # Alterar o nome do projeto para:
+  @NOME_DO_PROJETO/axios-config
+```
 
-## Passo 35
-na raiz do projeto rodar no terminal:
+## Criar arquivo index.ts
 
-```yarn add @types/jest -DW```
+```bash
+  # Abrir pastas packages/shared/axios-config para criar arquivo index.ts
+  $ cd packages/shared/axios-config
+  # Criar o arquivo 
+  index.ts
+
+```
+
+## Adicionando configuração no arquivo index.ts
+
+```bash
+  # Abrir pastas packages/shared/axios-config/index.ts para acessar o arquivo index.ts e adicionar configuração:
+  $ cd packages/shared/axios-config/index.ts
+  # Adicionar a seguinte configuração:
+  import axios from 'axios'
+
+  const api = axios.create({
+    baseURL: 'http://localhost:3333'
+  })
+
+  export default api
+
+```
+
+## Alterar a tag main
+
+```bash
+  # Abrir pastas packages/shared/axios-config/package.json
+  $ cd packages/shared/axios-config/package.json
+  # No arquivo package.json alterar a tag main para :
+  "main": "index.ts",
+```
+
+## Adicionar  jest
+
+  Na raiz do projeto rodar no terminal:
+```bash
+  $ yarn add @types/jest -DW
+```

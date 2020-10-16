@@ -1,631 +1,714 @@
 # Anotações - Monorepo com Express (Arquitetura Simples)
 
-## Passo 1
-criar pasta 
-packages > server
-e dentro de
-packages > server
-rodar no terminal:
+## Criar pasta server
 
-`yarn init -y`
+  ```bash
+    # Abrir pasta packages
+    $ cd packages
+    # Criar pasta server
+    $ mkdir server
+    # Execute
+    $ yarn init -y
+  ```
+## Alterar nome do projeto no package.json
+  ```bash
+    # Dentro de packages/sever
+    $ cd packages/server
+    # No arquivo package.json altere o nome do projeto para:
+    @NOME_DO_PROJETO/server
+  ```
 
-## Passo 16
-Dentro de 
-packages > server > package.json
-alterar o nome do projeto para 
-@NOME_DO_PROJETO/server
+## Criar arquivo .gitignore
+  ```bash
+    # Dentro de packages/sever
+    $ cd packages/server
+    # Criar arquivo .gitignore
+    .gitignore 
+  ```
 
-## Passo 2
-Dentro de
-packages > server
-criar arquivo 
-.gitignore
+## Procurar um gitignore para node
+Site: [gitignore.io](https://www.toptal.com/developers/gitignore)
+Colar no arquivo criado acima
 
-## Passo 3
-Procurar um gitignore para node na internet e colar no arquivo criado acima
+## Adcionar express
+  ```bash
+    # Dentro de packages/server
+    $ cd packages/server
+    # Execute
+    $ yarn add express
+  ```
+## Criar arquivo tsconfig.json
+  ```bash
+    # Dentro de packages/server
+    $ cd packages/server
+    # Execute
+    $ yarn tsc --init
+  ```
 
-## Passo 4
-Dentro de
-packages > server
-rodar no terminal:
 
-`yarn add express`
+## Alterar conteúdo do tsconfig.json
+```bash
+  # Dentro de packages/server
+  $ cd packages/server
 
-## Passo 6
-Dentro de
-packages > server
-rodar no terminal:
+  # Abrir arquivo tsconfing.json e alterar todo o conteúdo para:
 
-`yarn tsc --init`
-
-## Passo 71
-Dentro de
-packages > server > tsconfig.json
-alterar todo o conteúdo para:
-
-```
-{
-  "extends": "../../tsconfig.json",
-  "compilerOptions": {
-    "outDir": "./dist",                        
-    "rootDir": "./src",  
-  },
-  "include": ["./src/**/*"]
-}
-```
-
-## Passo 7
-Criar pasta
-packages > server > src
-
-## Passo 8
-Criar arquivo
-packages > server > src > server.ts
-
-## Passo 9
-Dentro de
-packages > server > src > server.ts
-colocar:
-
-```
-import express from 'express'
-import cors from 'cors'
-
-const app = express();
-
-app.use(cors())
-
-app.get("/", (request, response) => {
-  return response.json({ message: "Hello World" });
-});
-
-app.listen(3333, () => {
-  console.log("Server stated on port 3333");
-});
+  {
+    "extends": "../../tsconfig.json",
+    "compilerOptions": {
+      "outDir": "./dist",                        
+      "rootDir": "./src",  
+    },
+    "include": ["./src/**/*"]
+  }
 ```
 
-## Passo 11
-Dentro de 
-packages > server
-rodar no terminal: 
-
-`yarn add @types/express ts-node-dev -D`
-
-## Passo 12
-Dentro de 
-packages > server
-rodar: 
-
-`yarn add cors`
-
-## Passo 13
-Dentro de 
-packages > server
-rodar: 
-
-`yarn add @types/cors -D`
-
-## Passo 14
-Dentro de 
-packages > server > package.json
-adicionar tag:
-
+## Criar pasta src
+```bash
+  # Dentro de packages/server
+  $ cd packages/server
+  # Criar pasta src
+  $ mkdir src
 ```
-"scripts": {
-  "build": "tsc",
-  "dev:server": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules src/server.ts"
-}, 
+## Criar arquivo server.ts
+```bash
+  # Dentro de packages/server
+  $ cd packages/server
+  # criar arquivo
+  server.ts
 ```
 
-Obs: é bom digitar manualmente porque copiando dá problema.
+## Colocando conteúdo dentro do arquivo server.ts
+```bash
+  # Dentro de packages/server/src
+  $ cd packages/server/src
 
-## Passo 15
-Rode a aplicação com
+  # Abra arquivo server.ts e coloque:
 
-`yarn dev:server`
+  import express from 'express'
+  import cors from 'cors'
 
-dentro de 
-packages > server
-para testar se tudo está ok
+  const app = express();
 
-## Passo 16
-Criar arquivo
-packages > server > src > routes > index.ts
+  app.use(cors())
 
-## Passo 17
-Dentro de
-packages > server > src > routes > index.ts
-colocar:
+  app.get("/", (request, response) => {
+    return response.json({ message: "Hello World" });
+  });
 
-```
-import { Router } from 'express'
-
-const routes = Router()
-
-routes.get('/', (request, response) =>
-  response.json({ message: 'Hello World' })
-)
-
-export default routes
+  app.listen(3333, () => {
+    console.log("Server stated on port 3333");
+  });
 ```
 
-## Passo 18
-Substituir conteúdo de
-packages > server > src > server.ts
-por:
-
-```
-import express from 'express'
-import cors from 'cors'
-import routes from './routes'
-
-const app = express()
-
-app.use(cors())
-app.use(express.json())
-
-app.use(routes)
-
-app.listen(3333, () => {
-  console.log('Server stated on port 3333')
-})
+## Adicionar dependêcia
+```bash
+  # Dentro de packages/server
+  $ cd packages/server
+  # Execute
+  $ yarn add @types/express ts-node-dev -D
 ```
 
-## Passo 19
-Criar arquivo
-packages > server > ormconfig.json
-
-## Passo 20
-Dentro de
-packages > server
-rodar no terminal
-
-`yarn add typeorm pg`
-
-## Passo 21
-Dentro de
-packages > server > ormconfig.json
-colocar:
-
-```
-{
-  "type": "postgres",
-  "host": "localhost",
-  "port": 5432,
-  "username": "postgres",
-  "password": "docker",
-  "database": "dbname"
-}
+## Adicionar cors
+```bash
+  # Dentro de packages/server
+  $ cd packages/server
+  # Execute
+  $ yarn add cors
 ```
 
-## Passo 22:
-criar arquivo
-packages > server > src > database > index.ts
-
-## Passo 23:
-Dentro de
-packages > server > src > database > index.ts
-colocar:
-
-```
-import { createConnection } from 'typeorm'
-
-createConnection()
+## Adicionar dependêcia
+```bash
+  # Dentro de packages/server
+  $ cd packages/server
+  # Execute
+  $ yarn add @types/cors -D
 ```
 
-## Passo 24:
-Dentro de
-packages > server > src > server.ts
-adicionar
+## Colocar tag no package.json
+```bash
+  # Dentro de packages/server
+  $ cd packages/server
 
-`import './database'`
+  # Abra arquivo package.json e adicione a tag:
 
-após a importação de routes
-
-## Passo 25:
-Dentro de
-package.json
-adicionar dentro do array de nohoist os dois elementos abaixo:
-
+  "scripts": {
+    "build": "tsc",
+    "dev:server": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules src/server.ts"
+  }, 
 ```
+**Obs: é bom digitar manualmente porque copiando dá problema.**
+
+## Rodar a aplicação
+```bash
+  # Dentro de packages/server
+  $ cd packages/server
+  # Execute 
+  $ yarn dev:server
+```
+**Faça isso para testar se tudo está ok**
+
+## Criar arquivo index.ts
+```bash
+  # Dentro de packages/server
+  $ cd packages/server
+  # Criar pasta routes
+  $ mkdir routes
+  $ cd routes
+  Criar arquivo index.ts
+```
+
+## Colocar conteúdo dentro do index.ts
+```bash
+  # Dentro de packages/server/src/routes
+  $ cd packages/server/src/routes
+
+  # Abra o arquivo index.ts e coloque:
+
+  import { Router } from 'express'
+
+  const routes = Router()
+
+  routes.get('/', (request, response) =>
+    response.json({ message: 'Hello World' })
+  )
+
+  export default routes
+```
+
+## Substituir conteúdo de server.ts
+```bash
+  # Dentro de packages/server/src
+  $ cd packages/server/src
+
+  # Abra o arquivo server.ts e altere o conteúdo por:
+
+  import express from 'express'
+  import cors from 'cors'
+  import routes from './routes'
+
+  const app = express()
+
+  app.use(cors())
+  app.use(express.json())
+
+  app.use(routes)
+
+  app.listen(3333, () => {
+    console.log('Server stated on port 3333')
+  })
+```
+
+## Criar arquivo ormconfig.json
+```bash
+  #Dentro de packages/server 
+  $ cd packages/server
+
+  Crie arquivo ormconfig.json
+```
+
+## Adicionar typeorm
+```bash
+  #Dentro de packages/server 
+  $ cd packages/server
+  # Execute
+  $ yarn add typeorm pg
+```
+
+
+## Colocar conteúdo no ormconfig.json
+```bash
+  #Dentro de packages/server 
+  $ cd packages/server
+
+  Abra o arquivo ormconfig.json e coloque:
+
+  {
+    "type": "postgres",
+    "host": "localhost",
+    "port": 5432,
+    "username": "postgres",
+    "password": "docker",
+    "database": "dbname"
+  }
+```
+## Criar pasta database e criar arquivo index.ts dentro
+```bash
+  # Dentro de packages/server/src
+  $ cd packages/server/src
+  # Criar pasta database
+  $ mkdir database
+  $ cd database
+  Criar arquivo index.ts
+```
+
+## Colocar conteúdo no arquivo index.ts
+```bash
+  # Dentro de packages/server/src/database
+  $ cd packages/server/src/database
+
+  # Abrir arquivo index.ts e colocar:
+
+  import { createConnection } from 'typeorm'
+
+  createConnection()
+```
+
+## Importar database
+```bash
+  # Dentro de packages/server/src
+  $ cd packages/server/src
+
+  # Abrir arquivo server.ts e adicionar:
+
+  import './database'
+```
+**Após a importação de routes**
+
+## Adicionar elementos no array de nohois
+Dentro de package.json
+
+Adicionar dentro do array de nohoist os dois elementos abaixo:
+
+```bash
 "**/typeorm/**",
 "**/typeorm"
 ```
 
-## Passo 26:
-Rode o servidor para ver se está tudo ok agora que foi adicionado o banco
+## Rodar o servidor
+Rode o servidor para ver se está tudo ok, agora que foi adicionado o banco
 
-## Passo 27:
-Criar pasta
-packages > server > src > database > migrations
-
-## Passo 28:
-Alterar conteúdo de 
-packages > server > ormconfig.json para:
-
+## Criar pasta migrations
+```bash
+  #Dentro de packages/server/src/database
+  $ cd packages/server/src/database
+  # Criar pasta migrations
+  $ mkdir migrations
 ```
-{
-  "type": "postgres",
-  "host": "localhost",
-  "port": 5432,
-  "username": "postgres",
-  "password": "docker",
-  "database": "sampleprojectdb",
-  "entities": ["./src/models/*.ts"],
-  "migrations": ["./src/database/migrations/*.ts"],
-  "cli": {
-    "migrationsDir": "./src/database/migrations"
+
+## Alterar conteúdo do arquivo ormconfig.json
+```bash
+  #Dentro de packages/server
+  $ cd packages/server
+  
+  # Abra arquivo ormconfig.json e altere o conteúdo para:
+
+  {
+    "type": "postgres",
+    "host": "localhost",
+    "port": 5432,
+    "username": "postgres",
+    "password": "docker",
+    "database": "sampleprojectdb",
+    "entities": ["./src/models/*.ts"],
+    "migrations": ["./src/database/migrations/*.ts"],
+    "cli": {
+      "migrationsDir": "./src/database/migrations"
+    }
   }
-}
 ```
 
-# Passo 29:
-alterar conteúdo de 
-packages > server > tsconfig.json
-por:
+# Alterar conteúdo do arquivo tsconfig.json
+```bash
+  # Dentro de packages/server
+  $ cd packages/server
 
+  # Abra o arquivo tsconfig.json e altere o conteúdo para:
+
+  {
+    "extends": "../../tsconfig.json",
+    "compilerOptions": {
+      "outDir": "./dist",                        
+      "rootDir": "./src",  
+      "experimentalDecorators": true,
+      "emitDecoratorMetadata": true,
+      "strictPropertyInitialization": false
+    },
+    "include": ["./src/**/*"]
+  }
 ```
-{
-  "extends": "../../tsconfig.json",
-  "compilerOptions": {
-    "outDir": "./dist",                        
-    "rootDir": "./src",  
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "strictPropertyInitialization": false
+
+## Criar pasta models
+```bash
+  # Dentro packages/server/src
+  $ cd packages/server/src
+  # Criar pasta models
+  $ mkdir models
+```
+
+## Criar arquivo User.ts
+```bash
+  # Dentro de packages/server/src/models
+  $ cd packages/server/src/models 
+  Criar aquivo User.ts
+
+  # Coloque dentro:
+
+  import {
+    Entity,
+    Column,
+    PrimaryGeneratedColumn,
+    CreateDateColumn,
+    UpdateDateColumn
+  } from 'typeorm'
+
+  @Entity('users')
+  class User {
+    @PrimaryGeneratedColumn('uuid')
+    id: string
+
+    @Column()
+    name: string
+
+    @Column()
+    email: string
+
+    @Column()
+    password: string
+
+    @CreateDateColumn()
+    created_at: Date
+
+    @UpdateDateColumn()
+    updated_at: Date
+  }
+
+  export default User
+```
+
+## Adicionar script no arquivo package.json
+```bash
+  # Dentro de packages/server
+  $ cd packages/server
+  
+  # Abra o arquivo package.json
+
+  A tag scripts vai ficar assim:
+
+  "scripts": {
+    "build": "tsc",
+    "dev:server": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules src/server.ts",
+    "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js"  
   },
-  "include": ["./src/**/*"]
-}
 ```
 
-## Passo 30:
-Criar pasta
-packages > server > src > models
-
-## Passo 31:
-Criar arquivo
-packages > server > src > models > User.ts
-e dentro colocar:
-
-```
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  CreateDateColumn,
-  UpdateDateColumn
-} from 'typeorm'
-
-@Entity('users')
-class User {
-  @PrimaryGeneratedColumn('uuid')
-  id: string
-
-  @Column()
-  name: string
-
-  @Column()
-  email: string
-
-  @Column()
-  password: string
-
-  @CreateDateColumn()
-  created_at: Date
-
-  @UpdateDateColumn()
-  updated_at: Date
-}
-
-export default User
+## Criar migration de Users
+```bash
+  #Dentro de packages/server
+  $ cd packages/server
+  # Execute 
+  $ yarn typeorm migration:create -n CreateUsers
 ```
 
-## Passo 32: 
-Adicionar scrip em:
-packages > server > package.json
+## Alterar métodos up e down
+```bash
+  # Dentro de packages/serversrc/database/migrations
+  $ cd packages/serversrc/database/migrations
 
-vai ficar assim a tag scripts:
+  # Alterar métodos up e down por:
 
-```
-"scripts": {
-  "build": "tsc",
-  "dev:server": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules src/server.ts",
-  "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js"  
-},
-```
-
-## Passo 33:
-Rodar no terminal em
-packages > server
-
-`yarn typeorm migration:create -n CreateUsers`
-
-## Passo 34:
-Dentro de
-packages > server > src > database > migrations
-alterar métodos up e down por:
-
-```
-public async up(queryRunner: QueryRunner): Promise<void> {
-  await queryRunner.createTable(
-    new Table({
-      name: 'users',
-      columns: [
-        {
-          name: 'id',
-          type: 'uuid',
-          isPrimary: true,
-          generationStrategy: 'uuid',
-          default: 'uuid_generate_v4()'
-        },
-        {
-          name: 'name',
-          type: 'varchar',
-          isNullable: false
-        },
-        {
-          name: 'email',
-          type: 'varchar',
-          isNullable: false,
-          isUnique: true
-        },
-        {
-          name: 'password',
-          type: 'varchar',
-          isNullable: false
-        },
-        {
-          name: 'created_at',
-          type: 'timestamp',
-          default: 'now()'
-        },
-        {
-          name: 'updated_at',
-          type: 'timestamp',
-          default: 'now()'
-        }
-      ]
-    })
-  )
-}
-
-public async down(queryRunner: QueryRunner): Promise<void> {
-  await queryRunner.dropTable('users')
-}
-```
-
-## Passo 35
-no terminal rodar em
-packages > server
-
-`yarn typeorm migration:run`
-
-## Passo 36
-no terminal rodar em
-packages > server
-
-`yarn add reflect-metadata`
-
-## Passo 37
-Adicionar em
-packages > server > src > server.ts
-no começo do arquivo a linha
-
-`import 'reflect-metadata'`
-
-## Passo 38
-Trocar todo o conteúdo de
-packages > server > src > routes > index.ts
-por:
-
-```
-import { Router } from 'express'
-import usersRouter from './users.routes'
-
-const routes = Router()
-routes.use('/users', usersRouter)
-
-export default routes
-```
-
-## Passo 39
-Criar arquivo
-packages > server > src > routes > users.routes.ts
-e dentro colocar:
-
-```
-import { Router } from 'express'
-
-import CreateUserService from '../services/CreateUserService'
-
-const usersRouter = Router()
-
-usersRouter.post('/', async (request, response) => {
-  try {
-    const { name, email, password } = request.body
-
-    const createUser = new CreateUserService()
-
-    const user = await createUser.execute({
-      name,
-      email,
-      password
-    })
-
-    delete user.password
-
-    return response.json(user)
-  } catch (err) {
-    return response.status(400).json({ error: err.message })
+  public async up(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.createTable(
+      new Table({
+        name: 'users',
+        columns: [
+          {
+            name: 'id',
+            type: 'uuid',
+            isPrimary: true,
+            generationStrategy: 'uuid',
+            default: 'uuid_generate_v4()'
+          },
+          {
+            name: 'name',
+            type: 'varchar',
+            isNullable: false
+          },
+          {
+            name: 'email',
+            type: 'varchar',
+            isNullable: false,
+            isUnique: true
+          },
+          {
+            name: 'password',
+            type: 'varchar',
+            isNullable: false
+          },
+          {
+            name: 'created_at',
+            type: 'timestamp',
+            default: 'now()'
+          },
+          {
+            name: 'updated_at',
+            type: 'timestamp',
+            default: 'now()'
+          }
+        ]
+      })
+    )
   }
-})
 
-export default usersRouter
-```
-
-## Passo 40
-Criar arquivo
-packages > server > src > services > CreateUserService.ts
-e dentro colocar:
-
-```
-import { getRepository } from 'typeorm'
-
-import { hash } from 'bcryptjs'
-
-import User from '../models/User'
-
-interface Request {
-  name: string
-  email: string
-  password: string
-}
-
-class CreateUserService {
-  public async execute({ name, email, password }: Request): Promise<User> {
-    const usersRepository = getRepository(User)
-
-    const checkUserExists = await usersRepository.findOne({
-      where: { email }
-    })
-
-    if (checkUserExists) {
-      throw new Error(
-        'E-mail já existente na base de dados, tente outro e-mail.'
-      )
-    }
-
-    const hashedPassword = await hash(password, 8)
-
-    const user = usersRepository.create({
-      name,
-      email,
-      password: hashedPassword
-    })
-
-    await usersRepository.save(user)
-
-    return user
+  public async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.dropTable('users')
   }
-}
-
-export default CreateUserService
 ```
 
-## Passo 38
-No terminal dentro de
-packages > server
-rodar quatro comandos:
-
-`yarn add bcryptjs`
-`yarn add @types/bcryptjs -D`
-`yarn add jsonwebtoken`
-`yarn add @types/jsonwebtoken -D`
-
-## Passo 39
-Acesso o [link]() e gere um código, salve esse código
-
-## Passo 40
-Criar arquivo
-packages > server > src > routes > sessions.routes.ts
-e dentro colocar:
-
+## Rodar migration
+```bash
+  # Dentro de packages/server
+  $ cd packages/server
+  # Execute 
+  $ yarn typeorm migration:run
 ```
-import { Router } from 'express'
 
-import AuthenticateUserService from '../services/AuthenticateUserService'
+## Instalar reflect-metadata
+```bash
+  # Dentro de packages/server
+  $ cd packages/server
+  # Execute 
+  $ yarn add reflect-metadata
+```
 
-const sessionsRouter = Router()
+## Importar o reflect-metadata no arquivo server.ts
+```bash
+  # Dentro de packages/server/src
+  $ cd packages/server/src
 
-sessionsRouter.post('/', async (request, response) => {
-  try {
-    const { email, password } = request.body
+  Abra o arquivo server.ts e adicione no começo da linha:
+  import 'reflect-metadata'
 
-    const authenticateUser = new AuthenticateUserService()
+  
+  
+```
 
-    const { user, token } = await authenticateUser.execute({
-      email,
-      password
-    })
 
-    delete user.password
+## Alterar todo o conteúdo de index.ts
+```bash
+  # Dentro de packages/server/src/routes
+  $ cd packages/server/src/routes
 
-    return response.json({ user, token })
-  } catch (err) {
-    return response.status(400).json({ error: err.message })
+  Abra o arquivo index.ts e troque todo o conteúdo por:
+
+  import { Router } from 'express'
+  import usersRouter from './users.routes'
+
+  const routes = Router()
+  routes.use('/users', usersRouter)
+
+  export default routes
+```
+
+## Criar arquivo users.routes.ts
+```Bash
+  #Dentro de packages/server/src/routes
+  $ cd packages/server/src/routes
+
+  Criar arquivo users.routes.ts e dentro colocar:
+
+  import { Router } from 'express'
+
+  import CreateUserService from '../services/CreateUserService'
+
+  const usersRouter = Router()
+
+  usersRouter.post('/', async (request, response) => {
+    try {
+      const { name, email, password } = request.body
+
+      const createUser = new CreateUserService()
+
+      const user = await createUser.execute({
+        name,
+        email,
+        password
+      })
+
+      delete user.password
+
+      return response.json(user)
+    } catch (err) {
+      return response.status(400).json({ error: err.message })
+    }
+  })
+
+  export default usersRouter
+```
+
+## Criar arquivo CreateUserService.ts
+```Bash
+  # Dentro de packages/server/src/services
+  $ cd packages/server/src/services
+
+  Criar arquivo CreateUserService.ts e dentro colocar:
+
+
+  import { getRepository } from 'typeorm'
+
+  import { hash } from 'bcryptjs'
+
+  import User from '../models/User'
+
+  interface Request {
+    name: string
+    email: string
+    password: string
   }
-})
 
-export default sessionsRouter
-```
+  class CreateUserService {
+    public async execute({ name, email, password }: Request): Promise<User> {
+      const usersRepository = getRepository(User)
 
-## Passo 41:
-Criar arquivo
-packages > server > src > services > AuthenticateUserService.ts
-e dentro colocar:
+      const checkUserExists = await usersRepository.findOne({
+        where: { email }
+      })
 
-```
-import { getRepository } from 'typeorm'
-import { compare } from 'bcryptjs'
-import { sign } from 'jsonwebtoken'
+      if (checkUserExists) {
+        throw new Error(
+          'E-mail já existente na base de dados, tente outro e-mail.'
+        )
+      }
 
-import User from '../models/User'
+      const hashedPassword = await hash(password, 8)
 
-interface Request {
-  email: string
-  password: string
-}
+      const user = usersRepository.create({
+        name,
+        email,
+        password: hashedPassword
+      })
 
-interface Response {
-  user: User
-  token: string
-}
+      await usersRepository.save(user)
 
-class AuthenticateUserService {
-  public async execute({ email, password }: Request): Promise<Response> {
-    const usersRepository = getRepository(User)
-
-    const user = await usersRepository.findOne({ where: { email } })
-
-    if (!user) {
-      throw new Error('Combinação de email/senha inválida.')
-    }
-
-    const passwordMatched = await compare(password, user.password)
-
-    if (!passwordMatched) {
-      throw new Error('Combinação de email/senha inválida.')
-    }
-
-    const token = sign({}, 'caa9c8f8620cbb30679026bb6427e11f', {
-      subject: user.id,
-      expiresIn: '1d'
-    })
-
-    return {
-      user,
-      token
+      return user
     }
   }
-}
 
-export default AuthenticateUserService
+  export default CreateUserService
 ```
 
-# Passo 43
-Dentro de
-packages > server > src > routes > index.ts
-trocar conteúdo por:
+## Rodar quatro comandos
+```bash
+  # Dentro de packages/server
+  $ cd packages/server
 
+  # Execute:
+  $ yarn add bcryptjs
+  $ yarn add @types/bcryptjs -D
+  $ yarn add jsonwebtoken
+  $ yarn add @types/jsonwebtoken -D
 ```
-import { Router } from 'express'
-import sessionsRouter from './sessions.routes'
-import usersRouter from './users.routes'
 
-const routes = Router()
+## Acessar link 
+Acesso o [link](http://www.md5.cz/) e gere um código, salve esse código
 
-routes.use('/users', usersRouter)
-routes.use('/sessions', sessionsRouter)
 
-export default routes
+## Criar arquivo sessions.routes.ts
+```bash
+  # Dentro de packages/server/src/routes
+  $ cd packages/server/src/routes
+
+  Criar arquivo sessions.routes.ts e dentro colocar:
+
+
+  import { Router } from 'express'
+
+  import AuthenticateUserService from '../services/AuthenticateUserService'
+
+  const sessionsRouter = Router()
+
+  sessionsRouter.post('/', async (request, response) => {
+    try {
+      const { email, password } = request.body
+
+      const authenticateUser = new AuthenticateUserService()
+
+      const { user, token } = await authenticateUser.execute({
+        email,
+        password
+      })
+
+      delete user.password
+
+      return response.json({ user, token })
+    } catch (err) {
+      return response.status(400).json({ error: err.message })
+    }
+  })
+
+  export default sessionsRouter
+```
+
+## Criar arquivo AuthenticateUserService.ts
+```bash
+  # Dentro de packages/server/src/services
+  $ cd packages/server/src/services
+  
+  Criar arquivo AuthenticateUserService.ts e dentro colocar:
+
+
+  import { getRepository } from 'typeorm'
+  import { compare } from 'bcryptjs'
+  import { sign } from 'jsonwebtoken'
+
+  import User from '../models/User'
+
+  interface Request {
+    email: string
+    password: string
+  }
+
+  interface Response {
+    user: User
+    token: string
+  }
+
+  class AuthenticateUserService {
+    public async execute({ email, password }: Request): Promise<Response> {
+      const usersRepository = getRepository(User)
+
+      const user = await usersRepository.findOne({ where: { email } })
+
+      if (!user) {
+        throw new Error('Combinação de email/senha inválida.')
+      }
+
+      const passwordMatched = await compare(password, user.password)
+
+      if (!passwordMatched) {
+        throw new Error('Combinação de email/senha inválida.')
+      }
+
+      const token = sign({}, 'caa9c8f8620cbb30679026bb6427e11f', {
+        subject: user.id,
+        expiresIn: '1d'
+      })
+
+      return {
+        user,
+        token
+      }
+    }
+  }
+
+  export default AuthenticateUserService
+```
+
+# Alterar conteúdo do arquivo index.ts
+```bash
+  # Dentro de packages/server/src/routes
+  $ cd packages/server/src/routes
+
+  Trocar conteúdo por:
+
+  import { Router } from 'express'
+  import sessionsRouter from './sessions.routes'
+  import usersRouter from './users.routes'
+
+  const routes = Router()
+
+  routes.use('/users', usersRouter)
+  routes.use('/sessions', sessionsRouter)
+
+  export default routes
 ```
