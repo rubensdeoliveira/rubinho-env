@@ -661,324 +661,371 @@ export default SignIn
   
 ```
 
-## ...
-Dentro de
-packages > web
-rodar no terminal
+## Adicionar dependência
 
-`yarn add yup react-router-dom`
-
-## ... 
-Dentro de
-packages > web
-rodar no terminal
-
-`yarn add @types/yup @types/react-router-dom -D`
-
-## ... 
-Criar pasta
-packages > web > utils
-
-## ... 
-Criar arquivo
-packages > web > utils > getValidationErros.ts
-e dentro colocar:
-
-```
-import { ValidationError } from 'yup'
-
-interface IErrors {
-  [key: string]: string
-}
-
-export default function getValidationErrors(err: ValidationError): IErrors {
-  const validationErrors: IErrors = {}
-
-  err.inner.forEach(error => {
-    validationErrors[error.path] = error.message
-  })
-
-  return validationErrors
-}
+```bash
+  # Abrir pastas packages/web
+  $ cd packages/web
+  # Rodar no terminal:
+  $ yarn add yup react-router-dom
 ```
 
-## ...
-Criar pasta 
-packages > web > src > components > Button
+## Adicionar dependência 
 
-## ...
-Criar arquivo 
-packages > web > src > components > Button > index.tsx
-e dentro colocar:
-
-```
-import React, { ButtonHTMLAttributes } from 'react'
-
-import { Container } from './styles'
-
-type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
-  loading?: boolean
-}
-
-const Button: React.FC<ButtonProps> = ({ children, loading, ...rest }) => (
-  <Container type="button" {...rest}>
-    {loading ? 'Carregando...' : children}
-  </Container>
-)
-
-export default Button
-
+```bash
+  # Abrir pastas packages/web
+  $ cd packages/web
+  # rodar no terminal:
+  $ yarn add @types/yup @types/react-router-dom -D
 ```
 
-## ...
-Criar arquivo 
-packages > web > src > components > Button > styles.ts
-e dentro colocar:
+## Criar pasta utils dentro da pasta web
 
+```bash
+  # Abrir pastas packages/web
+  $ cd packages/web
+  # Dentro da pasta web criar a pasta utils
+  $ mkdir utils
+  # Caminho das pastas packages/web/utils
 ```
-import styled from 'styled-components'
-import { shade } from 'polished'
 
-export const Container = styled.button`
-  background: var(--secondary-color);
-  height: 56px;
-  border-radius: 10px;
-  border: 0;
-  padding: 0 1.6rem;
-  color: var(--contrast-color);
-  width: 100%;
-  font-weight: 500;
-  margin-top: 1.6rem;
-  transition: background-color 0.2s;
-  &:hover {
-    background: ${shade(0.2, '#0078b5')};
+## Criar arquivo getValidationErros.ts dentro da pasta utils
+
+```bash
+  # Abrir pastas packages/web/utils
+  $ cd packages/web/utils
+  # Criar o arquivo getValidationErros.ts dentro da pasta utils
+  # Caminhos das pastas até o arquivo packages/web/utils/getValidationErros.ts
+
+  # Dentro do arquivo getValidationErros.ts adicionar:
+
+  import { ValidationError } from 'yup'
+
+  interface IErrors {
+    [key: string]: string
   }
-`
+
+  export default function getValidationErrors(err: ValidationError): IErrors {
+    const validationErrors: IErrors = {}
+
+    err.inner.forEach(error => {
+      validationErrors[error.path] = error.message
+    })
+
+    return validationErrors
+  }
 ```
 
-## ... 
-Substituir todo o conteúdo de
-packages > web > src > pages > SignIn > index.tsx
-por:
+## Criar pasta Button
 
+```bash
+  # Abrir pastas packages/web/src/components
+  $ cd packages/web/src/components
+  # Dentro da pasta components criar a pasta Button
+  $ mkdir Button
+  # Caminho das pastas packages/web/src/components/Button
 ```
-import React, { useCallback, useRef } from 'react'
-import { Form } from '@unform/web'
-import { Container, Content } from './styles'
-import * as Yup from 'yup'
 
-import Button from '../../components/Button'
-import Input from '../../components/input'
-import { FormHandles } from '@unform/core'
-import { useHistory } from 'react-router-dom'
-import { FiLock, FiMail } from 'react-icons/fi'
-import getValidationErrors from '../../utils/getValidationErrors'
+## Criar arquivo index.tsx dentro da pasta Button
 
-interface ISignInFormData {
-  email: string
-  password: string
-}
+```bash
+  # Abrir pastas packages/web/src/components/Button
+  $ cd packages/web/src/components/Button
+  # Crie o arquivo index.tsx dentro da pasta Button
 
-const SignIn: React.FC = () => {
-  const formRef = useRef<FormHandles>(null)
+  # Dentro do arquivo index.tsx adicione:
 
-  // const { signIn } = useAuth()
+  import React, { ButtonHTMLAttributes } from 'react'
 
-  const history = useHistory()
+  import { Container } from './styles'
 
-  const handleSubmit = useCallback(
-    async (data: ISignInFormData) => {
-      try {
-        formRef.current?.setErrors({})
+  type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
+    loading?: boolean
+  }
 
-        const schema = Yup.object().shape({
-          email: Yup.string()
-            .required('E-mail obrigatório')
-            .email('E-mail inválido'),
-          password: Yup.string().required('Senha obrigatória')
-        })
-
-        await schema.validate(data, {
-          abortEarly: false
-        })
-
-        // await signIn({
-        //   email: data.email,
-        //   password: data.password
-        // })
-
-        history.push('/dashboard')
-      } catch (err) {
-        if (err instanceof Yup.ValidationError) {
-          const errors = getValidationErrors(err)
-
-          formRef.current?.setErrors(errors)
-        }
-      }
-    },
-    [history]
-  )
-
-  return (
-    <Container>
-      <Content>
-        <Form ref={formRef} onSubmit={handleSubmit}>
-          <h1>Faça seu login</h1>
-
-          <Input icon={FiMail} name="email" placeholder="E-mail" />
-          <Input
-            icon={FiLock}
-            name="password"
-            placeholder="Senha"
-            type="password"
-          />
-          <Button type="submit">Entrar</Button>
-        </Form>
-
-        <a href="temporário">Criar Conta</a>
-      </Content>
+  const Button: React.FC<ButtonProps> = ({ children, loading, ...rest }) => (
+    <Container type="button" {...rest}>
+      {loading ? 'Carregando...' : children}
     </Container>
   )
-}
 
-export default SignIn
-```
-
-## ..
-Trocar conteúdo de 
-packages > web > src > pages > SignIn > styles.ts
-por:
+  export default Button
 
 ```
-import styled from 'styled-components'
-import { shade } from 'polished'
 
-export const Container = styled.div`
-  height: 100vh; // Forçar a altura da tela ser a altura total do navegador
+## Criar arquivo styles.ts dentro da pasta Button
 
-  display: flex;
-  justify-content: center;
-  align-items: stretch; // Força os elementos filhos esticarem para terem 100vh;
-`
+```bash
+  # Abrir pastas packages/web/src/components/Button
+  $ cd packages/web/src/components/Button
+  # Crie o arquivo styles.ts dentro da pasta Button
 
-export const Content = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  # Dentro do arquivo styles.ts adicione:
 
-  width: 100%;
-  max-width: 70rem;
+  import styled from 'styled-components'
+  import { shade } from 'polished'
 
-  form {
-    margin: 8rem 0;
-    width: 34rem;
-    text-align: center;
-
-    h1 {
-      margin-bottom: 2.4rem;
-      color: var(--contrast-color);
-    }
-  }
-
-  a {
+  export const Container = styled.button`
+    background: var(--secondary-color);
+    height: 56px;
+    border-radius: 10px;
+    border: 0;
+    padding: 0 1.6rem;
     color: var(--contrast-color);
-    display: block;
-    margin-top: 2.4rem;
-    text-decoration: none;
-    transition: color 0.2s;
-
+    width: 100%;
+    font-weight: 500;
+    margin-top: 1.6rem;
+    transition: background-color 0.2s;
     &:hover {
-      color: ${shade(0.2, '#fff')};
+      background: ${shade(0.2, '#0078b5')};
     }
+
+```
+
+## Substituir conteúdo do arquivo index.tsx da pasta SignIn
+
+```bash
+  # Abrir pastas packages/web/src/pages/SignIn
+  $ cd packages/web/src/pages/SignIn
+
+  # Substituir conteúdo do arquivo index.tsx por:
+
+  import React, { useCallback, useRef } from 'react'
+  import { Form } from '@unform/web'
+  import { Container, Content } from './styles'
+  import * as Yup from 'yup'
+
+  import Button from '../../components/Button'
+  import Input from '../../components/input'
+  import { FormHandles } from '@unform/core'
+  import { useHistory } from 'react-router-dom'
+  import { FiLock, FiMail } from 'react-icons/fi'
+  import getValidationErrors from '../../utils/getValidationErrors'
+
+  interface ISignInFormData {
+    email: string
+    password: string
   }
-`
+
+  const SignIn: React.FC = () => {
+    const formRef = useRef<FormHandles>(null)
+
+    // const { signIn } = useAuth()
+
+    const history = useHistory()
+
+    const handleSubmit = useCallback(
+      async (data: ISignInFormData) => {
+        try {
+          formRef.current?.setErrors({})
+
+          const schema = Yup.object().shape({
+            email: Yup.string()
+              .required('E-mail obrigatório')
+              .email('E-mail inválido'),
+            password: Yup.string().required('Senha obrigatória')
+          })
+
+          await schema.validate(data, {
+            abortEarly: false
+          })
+
+          // await signIn({
+          //   email: data.email,
+          //   password: data.password
+          // })
+
+          history.push('/dashboard')
+        } catch (err) {
+          if (err instanceof Yup.ValidationError) {
+            const errors = getValidationErrors(err)
+
+            formRef.current?.setErrors(errors)
+          }
+        }
+      },
+      [history]
+    )
+
+    return (
+      <Container>
+        <Content>
+          <Form ref={formRef} onSubmit={handleSubmit}>
+            <h1>Faça seu login</h1>
+
+            <Input icon={FiMail} name="email" placeholder="E-mail" />
+            <Input
+              icon={FiLock}
+              name="password"
+              placeholder="Senha"
+              type="password"
+            />
+            <Button type="submit">Entrar</Button>
+          </Form>
+
+          <a href="temporário">Criar Conta</a>
+        </Content>
+      </Container>
+    )
+  }
+
+  export default SignIn
 ```
 
-## ... 
-Criar pasta 
-src > packages > web > src > routes
+## Trocar conteúdo do arquivo styles.ts da pasta SignIn
 
-## ... 
-Criar arquivo 
-src > packages > web > src > index.tsx
-e dentro colocar:
+```bash
+  # Abrir pastas packages/web/src/pages/SignIn/styles.ts para acessar arquivo styles.ts
+  $ cd packages/web/src/pages/SignIn/styles.ts
 
+  # Trocar conteúdo do arquivo styles.ts por:
+
+  import styled from 'styled-components'
+  import { shade } from 'polished'
+
+  export const Container = styled.div`
+    height: 100vh; // Forçar a altura da tela ser a altura total do navegador
+
+    display: flex;
+    justify-content: center;
+    align-items: stretch; // Força os elementos filhos esticarem para terem 100vh;
+  `
+
+  export const Content = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    max-width: 70rem;
+
+    form {
+      margin: 8rem 0;
+      width: 34rem;
+      text-align: center;
+
+      h1 {
+        margin-bottom: 2.4rem;
+        color: var(--contrast-color);
+      }
+    }
+
+    a {
+      color: var(--contrast-color);
+      display: block;
+      margin-top: 2.4rem;
+      text-decoration: none;
+      transition: color 0.2s;
+
+      &:hover {
+        color: ${shade(0.2, '#fff')};
+      }
+    }
+  `
 ```
-import React from 'react'
-import { Switch } from 'react-router-dom'
 
-import Route from './Route'
+## Criar pasta routes
 
-import SignIn from '../pages/SignIn'
-// import SignUp from '../pages/SignUp'
-
-// import Dashboard from '../pages/Dashboard'
-
-const Routes: React.FC = () => (
-  <Switch>
-    <Route path="/" exact component={SignIn} />
-    {/* <Route path="/signup" component={SignUp} /> */}
-
-    {/* <Route path="/dashboard" component={Dashboard} isPrivate /> */}
-  </Switch>
-)
-
-export default Routes
+```bash 
+  # Abrir pastas src/packages/web/src
+  $  cd src/packages/web/src
+  # Crie a pasta routes
+  $ mkdir routes
+  # Caminho das pastas src/packages/web/src/routes
 ```
 
-## ... 
-Criar arquivo 
-src > packages > web > src > Route.tsx
-e dentro colocar:
+## Criar arquivo index.tsx 
 
-```
-import React from 'react'
-import {
-  Route as ReactDOMRoute,
-  RouteProps as ReactDOMRouteProps,
-  Redirect,
-} from 'react-router-dom'
+```bash
+  # Abrir pastas packages/web/src/index.tsx
+  $ cd packages/web/src/index.tsx
 
-import { useAuth } from '../hooks/auth'
+  # Dentro do arquivo index.tsx adicionar:
 
-interface IRouteProps extends ReactDOMRouteProps {
-  isPrivate?: boolean
-  component: React.ComponentType
-}
+  import React from 'react'
+  import { Switch } from 'react-router-dom'
 
-const Route: React.FC<IRouteProps> = ({
-  isPrivate = false,
-  component: Component,
-  ...rest
-}) => {
-  const { user } = useAuth()
+  import Route from './Route'
 
-  return (
-    <ReactDOMRoute
-      {...rest}
-      render={({ location }) => {
-        return isPrivate === !!user ? (
-          <Component />
-        ) : (
-          <Redirect
-            to={{
-              pathname: isPrivate ? '/' : '/dashboard',
-              state: { from: location },
-            }}
-          />
-        )
-      }}
-    />
+  import SignIn from '../pages/SignIn'
+  // import SignUp from '../pages/SignUp'
+
+  // import Dashboard from '../pages/Dashboard'
+
+  const Routes: React.FC = () => (
+    <Switch>
+      <Route path="/" exact component={SignIn} />
+      {/* <Route path="/signup" component={SignUp} /> */}
+
+      {/* <Route path="/dashboard" component={Dashboard} isPrivate /> */}
+    </Switch>
   )
-}
 
-export default Route
+  export default Routes
 ```
 
-## ..
-Criar pasta
-packages > web > src > hooks
+## Criar arquivo Route.tsx
+
+```bash
+  # Abrir pastas packages/web/src
+  $ cd packages/web/src
+  # Criar o arquivo Route.tsx
+
+  # Dentro do arquivo Route.tsx adicionar:
+
+  import React from 'react'
+  import {
+    Route as ReactDOMRoute,
+    RouteProps as ReactDOMRouteProps,
+    Redirect,
+  } from 'react-router-dom'
+
+  import { useAuth } from '../hooks/auth'
+
+  interface IRouteProps extends ReactDOMRouteProps {
+    isPrivate?: boolean
+    component: React.ComponentType
+  }
+
+  const Route: React.FC<IRouteProps> = ({
+    isPrivate = false,
+    component: Component,
+    ...rest
+  }) => {
+    const { user } = useAuth()
+
+    return (
+      <ReactDOMRoute
+        {...rest}
+        render={({ location }) => {
+          return isPrivate === !!user ? (
+            <Component />
+          ) : (
+            <Redirect
+              to={{
+                pathname: isPrivate ? '/' : '/dashboard',
+                state: { from: location },
+              }}
+            />
+          )
+        }}
+      />
+    )
+  }
+
+  export default Route
+```
+
+## Criar pasta hooks
+
+```bash
+  # Abrir pastas packages/web/src
+  $ cd packages/web/src
+  # Criar pasta hooks
+  $ mkdir hooks
+  # Caminho das pastas packages/web/src/hooks
+```
 
 ## ..
 Criar arquivo
