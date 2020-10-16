@@ -46,7 +46,7 @@ excluir arquivo readme
 ## Passo 26
 Excluir arquivos desnecessários de
 packages > web > src
-deixando somente os arquivos que aparecem no anexo 1
+deixando somente os arquivos App.tsx e index.tsx
 
 ## Passo 27
 Trocar conteúdo de
@@ -82,12 +82,18 @@ export default App;
 ## Passo 29
 Excluir arquivos desnecessários de
 packages > web > public
-deixando somente os arquivos que aparecem no anexo 2
+deixando somente os arquivos index.html e robots.txt
 
 ## Passo 30
 Dentro de 
 packages > web > public > index.html
-excluir linhas desnecessárias deixando apenas as linhas que aparecem no anexo 3 e a tag description.
+excluir comentários e as linhas:
+
+```
+<link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+<link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+<link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+```
 
 ## Passo 31
 Dentro de 
