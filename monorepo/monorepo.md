@@ -320,13 +320,15 @@ Caso precise do axios ou de testes com jest volte para esse tutorial para contin
   "main": "index.ts",
 ```
 
-## Como usar o axios nos projetos (alterar)
+## Como usar o axios nos projetos
 
-Dentro do projeto que você deseja usar, como o web, adicione
-"@NOME_DO_PROJETO/axios-config": "*"
-no package.json
-e depois no arquivo que for utilizar importe com
-import api from '@NOME_DO_PROJETO/axios-config'
+```bash
+  Dentro do projeto que você deseja usar, como o web, no arquivo package.json adicione:
+  "@NOME_DO_PROJETO/axios-config": "*"
+
+  Depois no arquivo que for utilizar importe com:
+  import api from '@NOME_DO_PROJETO/axios-config'
+```
 
 ## Adicionar  jest
 
