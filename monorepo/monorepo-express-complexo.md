@@ -1618,443 +1618,501 @@ Adicionar dentro do array de nohoist os dois elementos abaixo:
   }
 
   export default AuthenticateUserService
-```
+``` 
 
-## ...
-Criar arquivo
-packages > server > src > modules > users > infra > http > routes > password.routes.ts
-e dentro colocar:
+## Criar arquivo password.routes.ts dentro da pasta routes
+```bash
+  # Abrir pastas packages/server/src/modules/users/infra/http/routes
+  $ cd packages/server/src/modules/users/infra/http/routes
+  # Dentro da pasta routes criar o arquivo password.routes.ts
+  # Caminho das pastas ate o arquivo packages/server/src/modules/users/infra/http/routes/password.routes.ts
+  # Dentro do arquivo password.routes.ts adicionar:
 
-```
-import { Router } from 'express'
-import { celebrate, Segments, Joi } from 'celebrate'
+  import { Router } from 'express'
+  import { celebrate, Segments, Joi } from 'celebrate'
 
-import ForgotPasswordController from '../controllers/ForgotPasswordController'
-import ResetPasswordController from '../controllers/ResetPasswordController'
+  import ForgotPasswordController from '../controllers/ForgotPasswordController'
+  import ResetPasswordController from '../controllers/ResetPasswordController'
 
-const passwordRouter = Router()
-const forgotPasswordController = new ForgotPasswordController()
-const resetPasswordController = new ResetPasswordController()
+  const passwordRouter = Router()
+  const forgotPasswordController = new ForgotPasswordController()
+  const resetPasswordController = new ResetPasswordController()
 
-passwordRouter.post(
-  '/forgot',
-  celebrate({
-    [Segments.BODY]: {
-      email: Joi.string().email().required(),
-    },
-  }),
-  forgotPasswordController.create,
-)
-passwordRouter.post(
-  '/reset',
-  celebrate({
-    [Segments.BODY]: {
-      token: Joi.string().uuid().required(),
-      password: Joi.string().required(),
-      password_confirmation: Joi.string().required().valid(Joi.ref('password')),
-    },
-  }),
-  resetPasswordController.create,
-)
-
-export default passwordRouter
-```
-
-## ...
-Criar arquivo
-packages > server > src > modules > users > infra > http > controllers > ForgotPasswordController.ts
-e dentro colocar:
-
-```
-import { Request, Response } from 'express'
-import { container } from 'tsyringe'
-
-import SendForgotPasswordEmailService from '@modules/users/services/SendForgotPasswordEmailService'
-
-export default class ForgotPasswordController {
-  public async create(request: Request, response: Response): Promise<Response> {
-    const { email } = request.body
-
-    const sendForgotPasswordEmail = container.resolve(
-      SendForgotPasswordEmailService,
-    )
-
-    await sendForgotPasswordEmail.execute({
-      email,
-    })
-
-    return response.status(204).json()
-  }
-}
-```
-
-## ...
-Criar arquivo
-packages > server > src > modules > users > infra > http > controllers > ResetPasswordController.ts
-e dentro colocar:
-
-```
-import { Request, Response } from 'express'
-import { container } from 'tsyringe'
-
-import ResetPasswordService from '@modules/users/services/ResetPasswordService'
-
-export default class ResetPasswordController {
-  public async create(request: Request, response: Response): Promise<Response> {
-    const { password, token } = request.body
-
-    const resetPassword = container.resolve(ResetPasswordService)
-
-    await resetPassword.execute({
-      token,
-      password,
-    })
-
-    return response.status(204).json()
-  }
-}
-```
-
-## ...
-Criar arquivo
-packages > server > src > modules > users > services > SendForgotPasswordEmailService.ts
-e dentro colocar:
-
-```
-import { injectable, inject } from 'tsyringe'
-import path from 'path'
-
-import AppError from '@shared/errors/AppError'
-import IMailProvider from '@shared/container/providers/MailProvider/models/IMailProvider'
-import IUsersRepository from '../repositories/IUsersRepository'
-import IUserTokensRepository from '../repositories/IUserTokensRepository'
-
-interface IRequest {
-  email: string
-}
-
-@injectable()
-class SendForgotPasswordEmailService {
-  constructor(
-    @inject('UsersRepository')
-    private usersRepository: IUsersRepository,
-
-    @inject('MailProvider')
-    private mailProvieder: IMailProvider,
-
-    @inject('UserTokensRepository')
-    private userTokensRepository: IUserTokensRepository,
-  ) {}
-
-  public async execute({ email }: IRequest): Promise<void> {
-    const user = await this.usersRepository.findByEmail(email)
-
-    if (!user) {
-      throw new AppError('Usuário não existe')
-    }
-
-    const { token } = await this.userTokensRepository.generate(user.id)
-
-    const forgotPasswordTemplate = path.resolve(
-      __dirname,
-      '..',
-      'views',
-      'forgot_password.hbs',
-    )
-
-    await this.mailProvieder.sendMail({
-      to: {
-        name: user.name,
-        email: user.email,
+  passwordRouter.post(
+    '/forgot',
+    celebrate({
+      [Segments.BODY]: {
+        email: Joi.string().email().required(),
       },
-      subject: '[Equipe x] Recuperação de senha',
-      templateData: {
-        file: forgotPasswordTemplate,
-        variables: {
-          name: user.name,
-          link: `${process.env.APP_WEB_URL}/reset-password?token=${token}`,
-        },
+    }),
+    forgotPasswordController.create,
+  )
+  passwordRouter.post(
+    '/reset',
+    celebrate({
+      [Segments.BODY]: {
+        token: Joi.string().uuid().required(),
+        password: Joi.string().required(),
+        password_confirmation: Joi.string().required().valid(Joi.ref('password')),
       },
-    })
-  }
-}
+    }),
+    resetPasswordController.create,
+  )
 
-export default SendForgotPasswordEmailService
+  export default passwordRouter
 ```
 
-## ...
-Criar arquivo
-packages > server > src > modules > users > services > ResetPasswordService.ts
-e dentro colocar:
+## Criar arquivo ForgotPasswordController.ts dentro da pasta controllers
+```bash
+  # Abrir pastas packages/server/src/modules/users/infra/http/controllers
+  $ cd packages/server/src/modules/users/infra/http/controllers
+  # Criar arquivo ForgotPasswordController.ts dentro da pasta controllers
+  # Caminho das pastas até o arquivo packages/server/src/modules/users/infra/http/controllers/ForgotPasswordController.ts
+  # Dentro do arquivo ForgotPasswordController.ts adicionar:
 
-```
-import { injectable, inject } from 'tsyringe'
-import { isAfter, addHours } from 'date-fns'
+  import { Request, Response } from 'express'
+  import { container } from 'tsyringe'
 
-import AppError from '@shared/errors/AppError'
-import IUsersRepository from '../repositories/IUsersRepository'
-import IUserTokensRepository from '../repositories/IUserTokensRepository'
-import IHashProvider from '../providers/HashProvider/models/IHashProvider'
+  import SendForgotPasswordEmailService from '@modules/users/services/SendForgotPasswordEmailService'
 
-interface IRequest {
-  password: string
-  token: string
-}
+  export default class ForgotPasswordController {
+    public async create(request: Request, response: Response): Promise<Response> {
+      const { email } = request.body
 
-@injectable()
-class ResetPasswordService {
-  constructor(
-    @inject('UsersRepository')
-    private usersRepository: IUsersRepository,
+      const sendForgotPasswordEmail = container.resolve(
+        SendForgotPasswordEmailService,
+      )
 
-    @inject('UserTokensRepository')
-    private userTokensRepository: IUserTokensRepository,
-
-    @inject('HashProvider')
-    private hashProvider: IHashProvider,
-  ) {}
-
-  public async execute({ token, password }: IRequest): Promise<void> {
-    const userToken = await this.userTokensRepository.findByToken(token)
-
-    if (!userToken) {
-      throw new AppError('Token de usuário inexistente')
-    }
-
-    const user = await this.usersRepository.findById(userToken.user_id)
-
-    if (!user) {
-      throw new AppError('Usuário não existente')
-    }
-
-    const tokenCreatedAt = userToken.created_at
-    const compareDate = addHours(tokenCreatedAt, 2)
-
-    if (isAfter(Date.now(), compareDate)) {
-      throw new AppError('Token expirado')
-    }
-
-    user.password = await this.hashProvider.generateHash(password)
-
-    await this.usersRepository.save(user)
-  }
-}
-
-export default ResetPasswordService
-```
-
-## ...
-dentro de
-packages > server
-rodar no terminal:
-
-`yarn add date-fns express-async-errors`
-
-## ...
-Criar pasta
-packages > server > src > shared > container > providers > MailProvider
-
-## ...
-Criar arquivo
-packages > server > src > shared > container > providers > MailProvider > index.ts
-e dentro colocar:
-
-```
-import { container } from 'tsyringe'
-
-import IMailProvider from './models/IMailProvider'
-import EtherealMailProvider from './implementations/EtherealMailProvider'
-
-container.registerInstance<IMailProvider>(
-  'MailProvider',
-  container.resolve(EtherealMailProvider)
-)
-```
-
-## ...
-Criar pasta
-packages > server > src > shared > container > providers > MailProvider > models
-
-## ...
-Criar arquivo
-packages > server > src > shared > container > providers > MailProvider > models > IMailProvider.ts
-e dentro colocar:
-
-```
-import ISendMailDTO from '../dtos/ISendMailDTO'
-
-export default interface IMailProvider {
-  sendMail(data: ISendMailDTO): Promise<void>
-}
-```
-
-## ...
-Criar pasta
-packages > server > src > shared > container > providers > MailProvider > implementations
-
-## ...
-Criar arquivo
-packages > server > src > shared > container > providers > MailProvider > implementations > EtherealMailProvider.ts
-e dentro colocar:
-
-```
-import nodemailer, { Transporter } from 'nodemailer'
-import { inject, injectable } from 'tsyringe'
-
-import IMailTemplateProvider from '@shared/container/providers/MailTemplateProvider/models/IMailTemplateProvider'
-import IMailProvider from '../models/IMailProvider'
-import ISendMailDTO from '../dtos/ISendMailDTO'
-
-@injectable()
-export default class EtherealMailProvider implements IMailProvider {
-  private client: Transporter
-
-  constructor(
-    @inject('MailTemplateProvider')
-    private mailTemplateProvider: IMailTemplateProvider
-  ) {
-    nodemailer.createTestAccount().then(account => {
-      const transporter = nodemailer.createTransport({
-        host: account.smtp.host,
-        port: account.smtp.port,
-        secure: account.smtp.secure,
-        auth: {
-          user: account.user,
-          pass: account.pass
-        }
+      await sendForgotPasswordEmail.execute({
+        email,
       })
 
-      this.client = transporter
-    })
+      return response.status(204).json()
+    }
+  }
+```
+
+## Criar arquivo ResetPasswordController.ts dentro da pasta controllers
+```bash
+  # Abrir pastas packages/server/src/modules/infra/http/controllers
+  $ cd packages/server/src/modules/infra/http/controllers
+  # Criar arquivo ResetPasswordController.ts dentro da pasta controllers
+  # Caminho das pastas até o arquivo packages/server/src/modules/infra/http/controllers/ResetPasswordController.ts
+  # Dentro do arquivo ResetPasswordController.ts adicionar:
+
+  import { Request, Response } from 'express'
+  import { container } from 'tsyringe'
+
+  import ResetPasswordService from '@modules/users/services/ResetPasswordService'
+
+  export default class ResetPasswordController {
+    public async create(request: Request, response: Response): Promise<Response> {
+      const { password, token } = request.body
+
+      const resetPassword = container.resolve(ResetPasswordService)
+
+      await resetPassword.execute({
+        token,
+        password,
+      })
+
+      return response.status(204).json()
+    }
+  }
+```
+
+## Criar arquivo SendForgotPasswordEmailService.ts
+```bash
+  # Abrir pastas packages/server/src/modules/users/services
+  $ cd packages/server/src/modules/users/services
+  # Criar o arquivo SendForgotPasswordEmailService.ts dentro da pasta service
+  # Caminho das pastas até o arquivo packages/server/src/modules/users/services/SendForgotPasswordEmailService.ts
+  # Dentro do arquivo SendForgotPasswordEmailService.ts adicionar:
+
+  import { injectable, inject } from 'tsyringe'
+  import path from 'path'
+
+  import AppError from '@shared/errors/AppError'
+  import IMailProvider from '@shared/container/providers/MailProvider/models/IMailProvider'
+  import IUsersRepository from '../repositories/IUsersRepository'
+  import IUserTokensRepository from '../repositories/IUserTokensRepository'
+
+  interface IRequest {
+    email: string
   }
 
-  public async sendMail({
-    to,
-    from,
-    subject,
-    templateData
-  }: ISendMailDTO): Promise<void> {
-    const message = await this.client.sendMail({
-      from: {
-        name: from?.name || 'Equipe X',
-        address: from?.email || 'equipe@x.com.br'
-      },
-      to: {
-        name: to.name,
-        address: to.email
-      },
+  @injectable()
+  class SendForgotPasswordEmailService {
+    constructor(
+      @inject('UsersRepository')
+      private usersRepository: IUsersRepository,
+
+      @inject('MailProvider')
+      private mailProvieder: IMailProvider,
+
+      @inject('UserTokensRepository')
+      private userTokensRepository: IUserTokensRepository,
+    ) {}
+
+    public async execute({ email }: IRequest): Promise<void> {
+      const user = await this.usersRepository.findByEmail(email)
+
+      if (!user) {
+        throw new AppError('Usuário não existe')
+      }
+
+      const { token } = await this.userTokensRepository.generate(user.id)
+
+      const forgotPasswordTemplate = path.resolve(
+        __dirname,
+        '..',
+        'views',
+        'forgot_password.hbs',
+      )
+
+      await this.mailProvieder.sendMail({
+        to: {
+          name: user.name,
+          email: user.email,
+        },
+        subject: '[Equipe x] Recuperação de senha',
+        templateData: {
+          file: forgotPasswordTemplate,
+          variables: {
+            name: user.name,
+            link: `${process.env.APP_WEB_URL}/reset-password?token=${token}`,
+          },
+        },
+      })
+    }
+  }
+
+  export default SendForgotPasswordEmailService
+```
+
+## Criar arquivo ResetPasswordService.ts dentro da pasta service
+```bash
+  # Abrir pastas packages/server/src/modules/users/service
+  $ cd packages/server/src/modules/users/service
+  # Criar arquivo ResetPasswordService.ts dentro da pasta service
+  # Caminho das pastas até o arquivo packages/server/src/modules/users/service/ResetPasswordService.ts
+  # Dentro do arquivo ResetPasswordService.ts adicionar:
+
+  import { injectable, inject } from 'tsyringe'
+  import { isAfter, addHours } from 'date-fns'
+
+  import AppError from '@shared/errors/AppError'
+  import IUsersRepository from '../repositories/IUsersRepository'
+  import IUserTokensRepository from '../repositories/IUserTokensRepository'
+  import IHashProvider from '../providers/HashProvider/models/IHashProvider'
+
+  interface IRequest {
+    password: string
+    token: string
+  }
+
+  @injectable()
+  class ResetPasswordService {
+    constructor(
+      @inject('UsersRepository')
+      private usersRepository: IUsersRepository,
+
+      @inject('UserTokensRepository')
+      private userTokensRepository: IUserTokensRepository,
+
+      @inject('HashProvider')
+      private hashProvider: IHashProvider,
+    ) {}
+
+    public async execute({ token, password }: IRequest): Promise<void> {
+      const userToken = await this.userTokensRepository.findByToken(token)
+
+      if (!userToken) {
+        throw new AppError('Token de usuário inexistente')
+      }
+
+      const user = await this.usersRepository.findById(userToken.user_id)
+
+      if (!user) {
+        throw new AppError('Usuário não existente')
+      }
+
+      const tokenCreatedAt = userToken.created_at
+      const compareDate = addHours(tokenCreatedAt, 2)
+
+      if (isAfter(Date.now(), compareDate)) {
+        throw new AppError('Token expirado')
+      }
+
+      user.password = await this.hashProvider.generateHash(password)
+
+      await this.usersRepository.save(user)
+    }
+  }
+
+  export default ResetPasswordService
+```
+
+## Adicionar dependencia dentro de server 
+```bash
+  # Abrir pastas packages/server
+  $ cd packages/server
+  # Rodar no terminal dentro da pasta server:
+  $ yarn add date-fns express-async-errors
+```
+
+## Criar pasta MailProvider
+```bash
+  # Abrir pastas packages/server/src/shared/container/providers
+  $ cd packages/server/src/shared/container/providers
+  # Criar pasta MailProvider
+  $ mkdir MailProvider
+  # Caminho das pastas packages/server/src/shared/container/providers/MailProvider
+```
+## Criar arquivo index.ts dentro da pasta MailProvider
+```bash
+  # Abrir pastas packages/server/src/shared/container/providers/MailProvider
+  $ cd packages/server/src/shared/container/providers/MailProvider
+  # Criar arquivo index.ts dentro da pasta MailProvider
+  # Caminho das pastas até o arquivo packages/server/src/shared/container/providers/MailProvider/index.ts
+  # Dentro do arquivo index.ts adicionar:
+
+  import { container } from 'tsyringe'
+
+  import IMailProvider from './models/IMailProvider'
+  import EtherealMailProvider from './implementations/EtherealMailProvider'
+
+  container.registerInstance<IMailProvider>(
+    'MailProvider',
+    container.resolve(EtherealMailProvider)
+  )
+```
+
+## Criar pasta models 
+```bash
+  # Abrir pastas packages/server/src/shared/container/providers/MailProvider
+  $ cd packages/server/src/shared/container/providers/MailProvider
+  # Criar pasta models
+  $ mkdir models
+  # Caminho das pastas packages/server/src/shared/container/providers/MailProvider/models
+```
+## Criar arquivo IMailProvider.ts dentro da pasta models
+```bash
+   # Abrir pastas packages/server/src/shared/container/providers/MailProvider/models
+   $ cd packages/server/src/shared/container/providers/MailProvider/models
+   # Criar arquivo IMailProvider.ts dentro da pasta models
+   # Caminho das pastas até o arquivo packages/server/src/shared/container/providers/MailProvider/models/IMailProvider.ts
+   # Dentro do arquivo IMailProvider.ts adicionar:
+
+  import ISendMailDTO from '../dtos/ISendMailDTO'
+
+  export default interface IMailProvider {
+    sendMail(data: ISendMailDTO): Promise<void>
+  }
+```
+
+## Criar pasta implementations
+```bash
+  # Abrir pastas packages/server/src/shared/container/providers/MailProvider
+  $ cd packages/server/src/shared/container/providers/MailProvider
+  # Criar pasta implementations 
+  $ mkdir implementations
+  # Caminho das pastas packages/server/src/shared/container/providers/MailProvider/implementations
+```
+## Criar arquivo EtherealMailProvider.ts dentro da pasta implementations
+```bash
+  # Abrir pastas packages/server/src/shared/container/providers/MailProvider/implementations
+  $ cd packages/server/src/shared/container/providers/MailProvider/implementations
+  # Criar arquivo EtherealMailProvider.ts dentro da pasta implementations
+  # Caminho das pastas até o arquivo packages/server/src/shared/container/providers/MailProvider/implementations/EtherealMailProvider.ts
+  # Dentro do arquivo EtherealMailProvider.ts adicionar:
+
+  import nodemailer, { Transporter } from 'nodemailer'
+  import { inject, injectable } from 'tsyringe'
+
+  import IMailTemplateProvider from '@shared/container/providers/MailTemplateProvider/models/IMailTemplateProvider'
+  import IMailProvider from '../models/IMailProvider'
+  import ISendMailDTO from '../dtos/ISendMailDTO'
+
+  @injectable()
+  export default class EtherealMailProvider implements IMailProvider {
+    private client: Transporter
+
+    constructor(
+      @inject('MailTemplateProvider')
+      private mailTemplateProvider: IMailTemplateProvider
+    ) {
+      nodemailer.createTestAccount().then(account => {
+        const transporter = nodemailer.createTransport({
+          host: account.smtp.host,
+          port: account.smtp.port,
+          secure: account.smtp.secure,
+          auth: {
+            user: account.user,
+            pass: account.pass
+          }
+        })
+
+        this.client = transporter
+      })
+    }
+
+    public async sendMail({
+      to,
+      from,
       subject,
-      html: await this.mailTemplateProvider.parse(templateData)
-    })
+      templateData
+    }: ISendMailDTO): Promise<void> {
+      const message = await this.client.sendMail({
+        from: {
+          name: from?.name || 'Equipe X',
+          address: from?.email || 'equipe@x.com.br'
+        },
+        to: {
+          name: to.name,
+          address: to.email
+        },
+        subject,
+        html: await this.mailTemplateProvider.parse(templateData)
+      })
 
-    console.log('Message sent: %s', message.messageId)
-    console.log('Preview URL: %s', nodemailer.getTestMessageUrl(message))
+      console.log('Message sent: %s', message.messageId)
+      console.log('Preview URL: %s', nodemailer.getTestMessageUrl(message))
+    }
   }
-}
 ```
 
 
-## ...
-Criar pasta
-packages > server > src > shared > container > providers > MailProvider > dtos
-
-## ...
-Criar arquivo
-packages > server > src > shared > container > providers > MailProvider > dtos > ISendMailDTO.ts
-e dentro colocar:
-
+## Criar pasta dtos
+```bash
+  # Abrir pastas packages/server/src/shared/container/providers/MailProvider
+  $ cd packages/server/src/shared/container/providers/MailProvider
+  # Criar pasta dtos
+  $ mkdir dtos
+  # Caminho das pastas packages/server/src/shared/container/providers/MailProvider/dtos
 ```
-import IParseMailTemplateDTO from '@shared/container/providers/MailTemplateProvider/dtos/IParseMailTemplateDTO'
+## Criar arquivo ISendMailDTO.ts dentro da pasta dtos
+```bash
+  # Abrir pastas packages/server/src/shared/container/providers/MailProvider/dtos
+  $ cd packages/server/src/shared/container/providers/MailProvider/dtos
+  # Criar arquivo ISendMailDTO.ts dentro da pasta dtos
+  # Caminho das pastas até o arquivo packages/server/src/shared/container/providers/MailProvider/dtos/ISendMailDTO.ts
+  # Dentro do arquivo ISendMailDTO.ts adicionar:
 
-interface IMailContact {
-  name: string
-  email: string
-}
+  import IParseMailTemplateDTO from '@shared/container/providers/MailTemplateProvider/dtos/IParseMailTemplateDTO'
 
-export default interface ISendMailDTO {
-  to: IMailContact
-  from?: IMailContact
-  subject: string
-  templateData: IParseMailTemplateDTO
-}
-```
-
-## ...
-Criar pasta
-packages > server > src > shared > container > providers > MailTemplateProvider
-
-## ...
-Criar arquivo
-packages > server > src > shared > container > providers > MailTemplateProvider > index.ts
-e dentro colocar:
-
-```
-import { container } from 'tsyringe'
-
-import IMailTemplateProvider from './models/IMailTemplateProvider'
-import HandlebarsMailTemplateProvider from './implementations/HandlebarsMailTemplateProvider'
-
-container.registerSingleton<IMailTemplateProvider>(
-  'MailTemplateProvider',
-  HandlebarsMailTemplateProvider
-)
-```
-
-## ...
-Criar pasta
-packages > server > src > shared > container > providers > MailTemplateProvider > models
-
-## ...
-Criar arquivo
-packages > server > src > shared > container > providers > MailTemplateProvider > models > IMailTemplateProvider.ts
-e dentro colocar:
-
-```
-import IParseMailTemplateDTO from '../dtos/IParseMailTemplateDTO'
-
-export default interface IMailTemplateProvider {
-  parse(data: IParseMailTemplateDTO): Promise<string>
-}
-```
-
-## ...
-Criar pasta
-packages > server > src > shared > container > providers > MailTemplateProvider > implementations
-
-## ...
-Criar arquivo
-packages > server > src > shared > container > providers > MailTemplateProvider > implementations > HandlebarsMailTemplateProvider.ts
-e dentro colocar:
-
-```
-import handlebars from 'handlebars'
-import fs from 'fs'
-
-import IParseMailTemplateDTO from '../dtos/IParseMailTemplateDTO'
-import IMailTemplateProvider from '../models/IMailTemplateProvider'
-
-class HandlebarsMailTemplateProvider implements IMailTemplateProvider {
-  public async parse({
-    file,
-    variables,
-  }: IParseMailTemplateDTO): Promise<string> {
-    const templateFileContent = await fs.promises.readFile(file, {
-      encoding: 'utf-8',
-    })
-
-    const parseTemplate = handlebars.compile(templateFileContent)
-
-    return parseTemplate(variables)
+  interface IMailContact {
+    name: string
+    email: string
   }
-}
 
-export default HandlebarsMailTemplateProvider
+  export default interface ISendMailDTO {
+    to: IMailContact
+    from?: IMailContact
+    subject: string
+    templateData: IParseMailTemplateDTO
+  }
 ```
 
-## ...
-Criar pasta
-packages > server > src > shared > container > providers > MailTemplateProvider > dtos
+## Criar pasta MailTemplateProvider 
+```bash
+  # Abrir pastas packages/server/src/shared/container/providers
+  $ cd packages/server/src/shared/container/providers
+  # Criar pasta MailTemplateProvider
+  $ mkdir MailTemplateProvider
+  # Caminho das pastas packages/server/src/shared/container/providers/MailTemplateProvider
+```
+## Criar arquivo index.ts dentro da pasta MailTemplateProvider
+```bash
+  # Abrir pastas packages/server/src/shared/container/providers/MailTemplateProvider
+  $ cd packages/server/src/shared/container/providers/MailTemplateProvider
+  # Criar arquivo index.ts dentro da pasta MailTemplateProvider
+  # caminho das pastas até o arquivo packages/server/src/shared/container/providers/MailTemplateProvider/index.ts
+  # Dentro do arquivo index.ts adicionar:
 
+  import { container } from 'tsyringe'
+
+  import IMailTemplateProvider from './models/IMailTemplateProvider'
+  import HandlebarsMailTemplateProvider from './implementations/HandlebarsMailTemplateProvider'
+
+  container.registerSingleton<IMailTemplateProvider>(
+    'MailTemplateProvider',
+    HandlebarsMailTemplateProvider
+  )
+```
+
+## Criar pasta models dentro da pasta MailTemplateProvider
+```bash
+  # Abrir pastas packages/server/src/shared/container/providers/MailTemplateProvider
+  $ cd packages/server/src/shared/container/providers/MailTemplateProvider
+  # Criar pasta models
+  $ mkdir models
+  # Caminho das pastas packages/server/src/shared/container/providers/MailTemplateProvider/models
+```
+## Criar arquivo IMailTemplateProvider.ts dentro da pasta models
+```bash
+  # Abrir pastas packages/server/src/shared/container/providers/MailTemplateProvider/models
+  $ cd packages/server/src/shared/container/providers/MailTemplateProvider/models
+  # Criar arquivo IMailTemplateProvider.ts dentro da pasta models
+  # Caminho das pastas até o arquivo packages/server/src/shared/container/providers/MailTemplateProvider/models/IMailTemplateProvider.ts
+  # Dentro do arquivo IMailTemplateProvider.ts adicionar:
+
+  import IParseMailTemplateDTO from '../dtos/IParseMailTemplateDTO'
+
+  export default interface IMailTemplateProvider {
+    parse(data: IParseMailTemplateDTO): Promise<string>
+  }
+```
+
+## Criar pasta implementations dentro da pasta MailTemplateProvider
+```bash
+  # Abrir pastas packages/server/src/shared/container/providers/MailTemplateProvider
+  $ cd packages/server/src/shared/container/providers/MailTemplateProvider
+  # Criar pasta implementations
+  $ mkdir implementations
+  # Caminho das pastas packages/server/src/shared/container/providers/MailTemplateProvider/implementations
+```
+
+## Criar arquivo HandlebarsMailTemplateProvider.ts dentro da pasta implementations
+```bash
+  # Abrir pastas packages/server/src/shared/container/providers/MailTemplateProvider/implementations
+  $ cd  packages/server/src/shared/container/providers/MailTemplateProvider/implementations
+  # Criar arquivo HandlebarsMailTemplateProvider.ts dentro da pasta implementations
+  # caminho das pastas até o arquivo packages/server/src/shared/container/providers/MailTemplateProvider/implementations/HandlebarsMailTemplateProvider.ts
+  # Dentro do arquivo HandlebarsMailTemplateProvider.ts adicionar:
+
+  import handlebars from 'handlebars'
+  import fs from 'fs'
+
+  import IParseMailTemplateDTO from '../dtos/IParseMailTemplateDTO'
+  import IMailTemplateProvider from '../models/IMailTemplateProvider'
+
+  class HandlebarsMailTemplateProvider implements IMailTemplateProvider {
+    public async parse({
+      file,
+      variables,
+    }: IParseMailTemplateDTO): Promise<string> {
+      const templateFileContent = await fs.promises.readFile(file, {
+        encoding: 'utf-8',
+      })
+
+      const parseTemplate = handlebars.compile(templateFileContent)
+
+      return parseTemplate(variables)
+    }
+  }
+
+  export default HandlebarsMailTemplateProvider
+```
+
+## Criar pasta dtos dentro da pasta MailTemplateProvider
+```bash
+  # Abrir pastas packages/server/src/shared/container/providers/ MailTemplateProvider 
+  $ cd packages/server/src/shared/container/providers/ MailTemplateProvider 
+  # Criar pasta dtos
+  $ mkdir dtos
+  # Caminho das pastas packages/server/src/shared/container/providers/MailTemplateProvider/dtos
+```
 ## ...
 Criar arquivo
 packages > server > src > shared > container > providers > MailTemplateProvider > dtos > IParseMailTemplateDTO.ts
