@@ -2387,9 +2387,9 @@ Adicionar dentro do array de nohoist os dois elementos abaixo:
 
   # Alterar conteúdo de index.ts por: 
 
-  import './StorageProvider'
-  import './MailProvider'
   import './MailTemplateProvider'
+  import './MailProvider'
+  import './StorageProvider'
 ```
 
 ## Criar pasta typeorm
