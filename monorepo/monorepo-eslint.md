@@ -23,7 +23,7 @@ module.exports = {
     ecmaFeatures: {
       jsx: true
     },
-    ecmaVersion: 11,
+    ecmaVersion: 12,
     sourceType: 'module'
   },
   plugins: ['react', '@typescript-eslint', 'prettier', 'react-hooks'],
@@ -88,7 +88,7 @@ module.exports = {
     ecmaFeatures: {
       jsx: true
     },
-    ecmaVersion: 11,
+    ecmaVersion: 12,
     sourceType: 'module'
   },
   plugins: ['@typescript-eslint', 'prettier'],
@@ -128,6 +128,7 @@ module.exports = {
 ```
 module.exports = {
   env: {
+    browser: true,
     es2020: true,
     node: true,
     jest: true
@@ -151,6 +152,7 @@ module.exports = {
   plugins: ['@typescript-eslint', 'prettier', 'react'],
   rules: {
     'prettier/prettier': 'error',
+    'no-use-before-define': 'off',
     'camelcase': 'off',
     '@typescript-eslint/ban-types': 'off',
     'space-before-function-paren': ['error', 'never'],
@@ -158,6 +160,7 @@ module.exports = {
     '@typescript-eslint/no-useless-constructor': ['error'],
     'space-before-function-paren': 'off',
     'no-unused-expressions': 'off',
+    'react/prop-types': 'off',
     '@typescript-eslint/no-unused-vars': [
       'error',
       {
@@ -175,6 +178,9 @@ module.exports = {
     'import/resolver': {
       typescript: {}
     },
+    react: {
+      version: 'detect'
+    }
   }
 }
 ```
