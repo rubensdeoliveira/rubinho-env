@@ -1344,10 +1344,10 @@ export default SignIn
   `
 ```
 
-## Alterar conteúdo de index.tsx
+## Alterar conteúdo de SignIn/index.tsx
 ```bash
-  # Dentro de packages/web/src/pages/SignUp
-  $ cd packages/web/src/pages/SignUp
+  # Dentro de packages/web/src/pages/SignIn
+  $ cd packages/web/src/pages/SignIn
   
   # Alterar o conteúdo do arquivo index.tsx por:
 
@@ -1360,12 +1360,11 @@ export default SignIn
   import Input from '../../components/input'
   import { FormHandles } from '@unform/core'
   import { Link, useHistory } from 'react-router-dom'
-  import { FiLock, FiMail, FiUser } from 'react-icons/fi'
+  import { FiLock, FiMail } from 'react-icons/fi'
   import getValidationErrors from '../../utils/getValidationErrors'
-  import api from '@monoreact/axios-config'
+  import { useAuth } from '../../hooks/auth'
 
-  interface ISignUpFormData {
-    name: string
+  interface ISignInFormData {
     email: string
     password: string
   }
@@ -1373,15 +1372,16 @@ export default SignIn
   const SignIn: React.FC = () => {
     const formRef = useRef<FormHandles>(null)
 
+    const { signIn } = useAuth()
+
     const history = useHistory()
 
     const handleSubmit = useCallback(
-      async (data: ISignUpFormData) => {
+      async (data: ISignInFormData) => {
         try {
           formRef.current?.setErrors({})
 
           const schema = Yup.object().shape({
-            name: Yup.string().required('Nome obrigatório'),
             email: Yup.string()
               .required('E-mail obrigatório')
               .email('E-mail inválido'),
@@ -1392,9 +1392,12 @@ export default SignIn
             abortEarly: false
           })
 
-          await api.post('/users', data)
+          await signIn({
+            email: data.email,
+            password: data.password
+          })
 
-          history.push('/')
+          history.push('/dashboard')
         } catch (err) {
           if (err instanceof Yup.ValidationError) {
             const errors = getValidationErrors(err)
@@ -1403,16 +1406,15 @@ export default SignIn
           }
         }
       },
-      [history]
+      [history, signIn]
     )
 
     return (
       <Container>
         <Content>
           <Form ref={formRef} onSubmit={handleSubmit}>
-            <h1>Crie sua conta</h1>
+            <h1>Faça seu login</h1>
 
-            <Input icon={FiUser} name="name" placeholder="Nome" />
             <Input icon={FiMail} name="email" placeholder="E-mail" />
             <Input
               icon={FiLock}
@@ -1420,10 +1422,10 @@ export default SignIn
               placeholder="Senha"
               type="password"
             />
-            <Button type="submit">Cadastrar</Button>
+            <Button type="submit">Entrar</Button>
           </Form>
 
-          <Link to="/">Voltar para login</Link>
+          <Link to="/signup">Criar conta</Link>
         </Content>
       </Container>
     )
