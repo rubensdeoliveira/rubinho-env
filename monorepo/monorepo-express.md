@@ -148,7 +148,7 @@ Colar no arquivo criado acima
 ```
 **Faça isso para testar se tudo está ok**
 
-## Criar arquivo index.ts
+## Criar arquivo server/index.ts
 ```bash
   # Dentro de packages/server
   $ cd packages/server
@@ -158,7 +158,7 @@ Colar no arquivo criado acima
   Criar arquivo index.ts
 ```
 
-## Colocar conteúdo dentro do index.ts
+## Colocar conteúdo dentro do server/index.ts
 ```bash
   # Dentro de packages/server/src/routes
   $ cd packages/server/src/routes
@@ -216,7 +216,7 @@ Colar no arquivo criado acima
 ```
 
 
-## Colocar conteúdo no ormconfig.json
+## Colocar conteúdo no server/ormconfig.json
 ```bash
   #Dentro de packages/server 
   $ cd packages/server
@@ -242,7 +242,7 @@ Colar no arquivo criado acima
   Criar arquivo index.ts
 ```
 
-## Colocar conteúdo no arquivo index.ts
+## Colocar conteúdo no arquivo database/index.ts
 ```bash
   # Dentro de packages/server/src/database
   $ cd packages/server/src/database
@@ -286,7 +286,7 @@ Rode o servidor para ver se está tudo ok, agora que foi adicionado o banco
   $ mkdir migrations
 ```
 
-## Alterar conteúdo do arquivo ormconfig.json
+## Alterar conteúdo do arquivo server/ormconfig.json
 ```bash
   #Dentro de packages/server
   $ cd packages/server
@@ -308,7 +308,7 @@ Rode o servidor para ver se está tudo ok, agora que foi adicionado o banco
   }
 ```
 
-# Alterar conteúdo do arquivo tsconfig.json
+## Alterar conteúdo do arquivo tsconfig.json
 ```bash
   # Dentro de packages/server
   $ cd packages/server
@@ -336,7 +336,7 @@ Rode o servidor para ver se está tudo ok, agora que foi adicionado o banco
   $ mkdir models
 ```
 
-## Criar arquivo User.ts
+## Criar arquivo models/User.ts
 ```bash
   # Dentro de packages/server/src/models
   $ cd packages/server/src/models 
@@ -484,7 +484,7 @@ Rode o servidor para ver se está tudo ok, agora que foi adicionado o banco
 ```
 
 
-## Alterar todo o conteúdo de index.ts
+## Alterar todo o conteúdo de routes/index.ts
 ```bash
   # Dentro de packages/server/src/routes
   $ cd packages/server/src/routes
@@ -500,7 +500,7 @@ Rode o servidor para ver se está tudo ok, agora que foi adicionado o banco
   export default routes
 ```
 
-## Criar arquivo users.routes.ts
+## Criar arquivo routes/users.routes.ts
 ```Bash
   #Dentro de packages/server/src/routes
   $ cd packages/server/src/routes
@@ -536,7 +536,7 @@ Rode o servidor para ver se está tudo ok, agora que foi adicionado o banco
   export default usersRouter
 ```
 
-## Criar arquivo CreateUserService.ts
+## Criar arquivo services/CreateUserService.ts
 ```Bash
   # Dentro de packages/server/src/services
   $ cd packages/server/src/services
@@ -603,7 +603,7 @@ Rode o servidor para ver se está tudo ok, agora que foi adicionado o banco
 Acesso o [link](http://www.md5.cz/) e gere um código, salve esse código
 
 
-## Criar arquivo sessions.routes.ts
+## Criar arquivo routes/sessions.routes.ts
 ```bash
   # Dentro de packages/server/src/routes
   $ cd packages/server/src/routes
@@ -639,7 +639,7 @@ Acesso o [link](http://www.md5.cz/) e gere um código, salve esse código
   export default sessionsRouter
 ```
 
-## Criar arquivo AuthenticateUserService.ts
+## Criar arquivo services/AuthenticateUserService.ts
 ```bash
   # Dentro de packages/server/src/services
   $ cd packages/server/src/services
@@ -694,7 +694,7 @@ Acesso o [link](http://www.md5.cz/) e gere um código, salve esse código
   export default AuthenticateUserService
 ```
 
-# Alterar conteúdo do arquivo index.ts
+# Alterar conteúdo do arquivo routes/index.ts
 ```bash
   # Dentro de packages/server/src/routes
   $ cd packages/server/src/routes
