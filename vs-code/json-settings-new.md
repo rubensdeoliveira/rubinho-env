@@ -21,6 +21,6 @@
   "extensions.ignoreRecommendations": true,
   "breadcrumbs.enabled": true,
   "editor.bracketPairColorization.enabled": true,
-  "editor.guides.bracketPairs":"active",
+  "editor.guides.bracketPairs":"active"
 }
 ```
