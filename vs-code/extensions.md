@@ -12,5 +12,9 @@
 - Prisma
 - Prisma - Insider
 - Reload
+- Code Runner
+- Git lens
+- Editor Config
+- Vs code counter
 
 > Instalar também a font JetBrains Mono
