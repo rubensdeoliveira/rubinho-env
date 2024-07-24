@@ -17,6 +17,7 @@
 - Editor Config
 - HashiCorp Terraform
 - Terraform Format on Save
+- NX
 
 > Instalar também a font JetBrains Mono
 
