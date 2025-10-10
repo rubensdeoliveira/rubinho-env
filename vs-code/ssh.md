@@ -18,6 +18,8 @@ chmod 600 ~/.ssh/id_ed25519
 chmod 644 ~/.ssh/id_ed25519.pub
 ```
 
+joga em settings -> ssh
+
 ```
-cat ~/.ssh/id_ed25519.pub -> joga em settings -> ssh
+sudo apt install xclip && cat ~/.ssh/id_ed25519.pub | xclip -sel clip
 ```
