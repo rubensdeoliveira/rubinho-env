@@ -1,43 +1,75 @@
 {
-	"editor.letterSpacing": 0.8,
-	"editor.fontFamily": "Cascadia Code",
-	"editor.fontSize": 14,
-	"editor.fontLigatures": true,
-	"editor.codeActionsOnSave": {
-		"source.fixAll.eslint": "explicit",
-		"source.addMissingImports": "explicit"
-	},
-	"[prisma]": {
-		"editor.formatOnSave": true
-	},
-	"editor.minimap.enabled": false,
-	"editor.renderWhitespace": "boundary",
-	"editor.tabSize": 2,
-	"terminal.integrated.fontSize": 14,
-	"explorer.confirmDelete": false,
-	"security.workspace.trust.untrustedFiles": "open",
-	"explorer.compactFolders": false,
-	"extensions.ignoreRecommendations": true,
-	"breadcrumbs.enabled": true,
-	"editor.rulers": [80,120],
-	"editor.renderLineHighlight": "gutter",
-	"editor.bracketPairColorization.enabled": true,
-  "editor.guides.bracketPairs":"active",
-	"terminal.integrated.fontFamily": "'MesloLGS NF'",
-	"window.zoomLevel": 1,
-	"workbench.colorTheme": "Wildberries Darker",
-	"workbench.activityBar.location": "top",
-	"window.customTitleBarVisibility": "auto",
-	"rest-client.showResponseInDifferentTab": true,
-	"rest-client.previewResponsePanelTakeFocus": false,
-	"workbench.editor.enablePreview": false,
-	"rest-client.previewColumn": "current",
-	"javascript.preferences.importModuleSpecifierEnding": "minimal",
-	"typescript.preferences.importModuleSpecifierEnding": "minimal",
-	"typescript.updateImportsOnFileMove.enabled": "never",
-	"javascript.updateImportsOnFileMove.enabled": "never",
-	"typescript.preferences.importModuleSpecifier": "non-relative",
-	"javascript.preferences.importModuleSpecifier": "non-relative",
-	"chat.commandCenter.enabled": false,
-	"workbench.iconTheme": "vscode-great-icons",
+  // ============================================
+  // 📝 EDITOR — Fonte, estilo e comportamento
+  // ============================================
+  "editor.fontFamily": "'JetBrainsMono Nerd Font', 'JetBrains Mono', monospace",
+  "editor.fontSize": 14,
+  "editor.letterSpacing": 0.8,
+  "editor.fontLigatures": true,
+  "editor.tabSize": 2,
+  "editor.minimap.enabled": false,
+  "editor.renderWhitespace": "boundary",
+  "editor.rulers": [80, 120],
+  "editor.renderLineHighlight": "gutter",
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": "active",
+
+  // ============================================
+  // 🧹 FORMATAÇÃO / LINT
+  // ============================================
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.addMissingImports": "explicit"
+  },
+  "[prisma]": {
+    "editor.formatOnSave": true
+  },
+
+  // ============================================
+  // 💻 TERMINAL INTEGRADO
+  // ============================================
+  "terminal.integrated.fontFamily": "'JetBrainsMono Nerd Font', 'JetBrains Mono', monospace",
+  "terminal.integrated.fontSize": 14,
+
+  // ============================================
+  // 🧭 EXPLORER / NAVEGAÇÃO
+  // ============================================
+  "explorer.confirmDelete": false,
+  "explorer.compactFolders": false,
+  "breadcrumbs.enabled": true,
+
+  // ============================================
+  // 🌐 SEGURANÇA / TRUST
+  // ============================================
+  "security.workspace.trust.untrustedFiles": "open",
+
+  // ============================================
+  // 🧠 TYPESCRIPT / JAVASCRIPT
+  // ============================================
+  "typescript.updateImportsOnFileMove.enabled": "never",
+  "javascript.updateImportsOnFileMove.enabled": "never",
+  "typescript.preferences.importModuleSpecifier": "non-relative",
+  "javascript.preferences.importModuleSpecifier": "non-relative",
+
+  // ============================================
+  // 🌈 TEMAS / INTERFACE
+  // ============================================
+  "workbench.colorTheme": "Wildberries Darker",
+  "workbench.iconTheme": "vscode-great-icons",
+  "workbench.activityBar.location": "top",
+  "window.zoomLevel": 1,
+
+  // ============================================
+  // 🌐 REST CLIENT (Extensão)
+  // ============================================
+  "rest-client.showResponseInDifferentTab": true,
+  "rest-client.previewResponsePanelTakeFocus": false,
+  "rest-client.previewColumn": "current",
+
+  // ============================================
+  // ⚙️ OUTRAS CONFIGURAÇÕES GERAIS
+  // ============================================
+  "extensions.ignoreRecommendations": true,
+  "workbench.editor.enablePreview": false,
+  "chat.commandCenter.enabled": false
 }
