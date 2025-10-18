@@ -5,21 +5,30 @@
 - Color highlight
 - DotENV
 - ESLint
-- Expo tools
 - Git lens (apenas esse)
-- HashiCorp Terraform
 - Markdown Preview Enhanced
 - Prisma
 - px to rem
 - Reload
 - Tailwind CSS IntelliSense
-- Terraform Format on Save
-- vscode-styled-components
-- VS code Great Icons
+
+## Icones
+
+- VS code Great Icons (v1)
+- Symbols (v2)
+
+## Temas
+
+- Wildberries
+- Min theme
 
 ## Opcionais
 - Code Runner
 - Vs code counter
+- Expo tools
+- HashiCorp Terraform
+- Terraform Format on Save
+- vscode-styled-components
 
 ## Ada
 - .Net install tool
