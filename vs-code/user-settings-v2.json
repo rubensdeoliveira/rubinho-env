@@ -1,0 +1,95 @@
+{
+  // =======================
+  // Janela e interface
+  // =======================
+  "window.zoomLevel": 1,
+  "workbench.startupEditor": "none",
+  "workbench.colorTheme": "Min Dark",
+  "workbench.iconTheme": "symbols",
+  "workbench.activityBar.location": "top",
+  "workbench.statusBar.visible": false,
+  "window.titleBarStyle": "custom",
+  "window.title": "${dirty}${activeEditorShort}${separator}${rootName}",
+  "window.commandCenter": false,
+
+  // =======================
+  // Editor
+  // =======================
+  "editor.fontFamily": "JetBrainsMono Nerd Font",
+  "editor.fontSize": 14,
+  "editor.lineHeight": 1.8,
+  "editor.rulers": [80, 120],
+  "editor.renderLineHighlight": "gutter",
+  "editor.fontLigatures": true,
+  "editor.semanticHighlighting.enabled": false,
+  "editor.minimap.enabled": false,
+  "editor.scrollbar.vertical": "visible",
+  "editor.scrollbar.horizontal": "hidden",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.addMissingImports": "explicit"
+  },
+
+  // =======================
+  // Workbench e abas
+  // =======================
+  "workbench.editor.labelFormat": "short",
+  "workbench.layoutControl.enabled": false,
+
+  // =======================
+  // Explorer
+  // =======================
+  "explorer.compactFolders": false,
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.patterns": {
+    "package.json": "package*, pnpm-lock*, yarn-lock*, .eslint*, tsconfig*",
+    "tailwind.config*": "tailwind.config*, postcss.config*",
+    ".env": ".env*"
+  },
+  "breadcrumbs.enabled": false,
+  "symbols.hidesExplorerArrows": false,
+
+  // =======================
+  // Terminal
+  // =======================
+  "terminal.integrated.fontSize": 14,
+  "terminal.integrated.fontFamily": "JetBrainsMono Nerd Font",
+
+  // =======================
+  // Segurança e trust
+  // =======================
+  "security.workspace.trust.untrustedFiles": "open",
+  "extensions.ignoreRecommendations": true,
+
+  // =======================
+  // TypeScript / JavaScript
+  // =======================
+  "typescript.preferences.importModuleSpecifier": "non-relative",
+  "javascript.preferences.importModuleSpecifier": "non-relative",
+  "typescript.preferences.autoImportFileExcludePatterns": [
+    "**/node_modules/lodash/**",
+    "**/node_modules/moment/**"
+  ],
+  "javascript.preferences.autoImportFileExcludePatterns": [
+    "**/node_modules/lodash/**",
+    "**/node_modules/moment/**"
+  ],
+
+  // =======================
+  // GitLens
+  // =======================
+  "gitlens.currentLine.enabled": false,
+  "gitlens.codeLens.recentChange.enabled": false,
+
+  // =======================
+  // Diff / Comparação
+  // =======================
+  "diffEditor.renderSideBySide": true,
+
+  // =======================
+  // Linguagens específicas
+  // =======================
+  "[prisma]": {
+    "editor.formatOnSave": true
+  }
+}
