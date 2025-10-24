@@ -47,6 +47,7 @@ zstyle ':prezto:module:prompt' theme 'off'
 eval "$(starship init zsh)"
 
 alias dev='cd ~/dev'
+alias update-cursor='wget https://downloader.cursor.sh/linux/app.deb -O /tmp/cursor.deb && sudo apt install /tmp/cursor.deb -y'
 ```
 
 feche e salve o arquivo e rode no terminal
