@@ -11,6 +11,10 @@
     },
     {
         "key": "ctrl+l",
+        "command": "-aichat.insertselectionintochat"
+    },
+    {
+        "key": "ctrl+shift+l",
         "command": "editor.action.selectHighlights",
         "when": "editorFocus"
     }
