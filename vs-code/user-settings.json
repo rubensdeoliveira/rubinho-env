@@ -30,6 +30,10 @@
     "editor.cursorSmoothCaretAnimation": "on",
     "editor.cursorBlinking": "smooth",
     "editor.stickyScroll.enabled": true,
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true,
+    "editor.detectIndentation": false,
+    "indentRainbow.indentOption": 2,
     "editor.codeActionsOnSave": {
         "source.fixAll.eslint": "explicit",
         "source.addMissingImports": "explicit"
