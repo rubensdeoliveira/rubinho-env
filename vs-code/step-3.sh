@@ -90,16 +90,22 @@ fc-cache -fv
 echo "===== [FONTS] JetBrainsMono Nerd Font instalada ====="
 
 ###########################################################################
-# 4. CURSOR (modo correto)
+# 4. CURSOR 
 ###########################################################################
 
 echo "===== [CURSOR] Instalando Cursor Editor ====="
 
-curl -L "https://downloader.cursor.sh/linux/appImage/x64" -o cursor.AppImage
+# Download estável da AppImage
+curl -L "https://downloads.cursor.com/linux/appImage/x64" -o cursor.AppImage
+
 chmod +x cursor.AppImage
+
+# Instalar globalmente
 sudo mv cursor.AppImage /usr/local/bin/cursor
 
-echo "Cursor → instalado (AppImage global)"
+echo "Cursor -> instalado com sucesso!"
+cursor --version || echo "Cursor instalado, mas versão não pôde ser exibida."
+
 
 ###########################################################################
 # 5. TECLADO EUA INTERNACIONAL + cedilha
