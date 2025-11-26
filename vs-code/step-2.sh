@@ -79,3 +79,5 @@ rm "$TMP_ZSH_SCRIPT"
 echo "===== INSTALAÇÃO COMPLETA ====="
 echo "👉 Rode: source ~/.zshrc"
 echo "👉 Depois faça logout/login para ativar 100%"
+echo "👉 Rode: bash <(curl -Ls https://raw.githubusercontent.com/rubensdeoliveira/rubinho-env/master/vs-code/step-3-dev-stack.sh)"
+
