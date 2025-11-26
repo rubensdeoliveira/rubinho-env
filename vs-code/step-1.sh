@@ -1,4 +1,4 @@
-# bash <(curl -Ls https://github.com/rubensdeoliveira/rubinho-env/blob/master/vs-code/step-1.sh)
+# bash <(curl -Ls https://raw.githubusercontent.com/rubensdeoliveira/rubinho-env/master/vs-code/step-1.sh)
 
 #!/usr/bin/env bash
 
