@@ -6,6 +6,20 @@ echo "===== INSTALAÇÃO DO AMBIENTE DEV ====="
 echo "======================================="
 
 ###########################################################################
+# GIT E GITCONFIG
+###########################################################################
+
+echo "===== [GIT] Instalando Git ====="
+sudo apt update -y
+sudo apt install -y git
+
+echo "===== [GIT] Configurando identidade ====="
+git config --global user.name "rubinho"
+git config --global user.email "rubensojunior6@gmail.com"
+git config --global init.defaultBranch main
+git config --global color.ui auto
+
+###########################################################################
 # 1. DOCKER
 ###########################################################################
 
