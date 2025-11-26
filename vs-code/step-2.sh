@@ -2,33 +2,41 @@
 
 set -e
 
-echo "===== Iniciando configuração de Prezto + Starship ====="
+echo "========================================"
+echo "===== STARTING PREZTO + STARSHIP ======="
+echo "========================================"
 
 ZSH_BIN=$(which zsh)
 
-echo "===== Criando script temporário ZSH ====="
+echo "===== Creating temporary ZSH script ====="
 TMP_ZSH_SCRIPT=$(mktemp /tmp/zsh_script.XXXXXX)
 
 cat > "$TMP_ZSH_SCRIPT" << 'EOF'
 set -e
 
-echo "===== Instalando Prezto ====="
+echo "----------------------------------------"
+echo "  Installing Prezto"
+echo "----------------------------------------"
 if [ ! -d "${ZDOTDIR:-$HOME}/.zprezto" ]; then
   git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
 else
-  echo "Prezto já instalado."
+  echo "Prezto already installed."
 fi
 
-echo "===== Criando symlinks dos runcoms ====="
+echo "----------------------------------------"
+echo "  Creating Prezto runcom symlinks"
+echo "----------------------------------------"
 setopt EXTENDED_GLOB
 for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do
   ln -sf "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"
 done
 
-echo "===== Configurando módulos essenciais do Prezto ====="
+echo "----------------------------------------"
+echo "  Writing .zpreztorc (module config)"
+echo "----------------------------------------"
 cat > ~/.zpreztorc << 'ZPREZTOEOF'
 #
-# Configuração dos módulos do Prezto
+# Prezto module configuration
 #
 
 zstyle ':prezto:load' pmodule \
@@ -45,39 +53,51 @@ zstyle ':prezto:load' pmodule \
   'prompt'
 ZPREZTOEOF
 
-echo "===== Instalando Starship ====="
+echo "----------------------------------------"
+echo "  Installing Starship prompt"
+echo "----------------------------------------"
 curl -sS https://starship.rs/install.sh | sh
 
-echo "===== Baixando starship.toml ====="
+echo "----------------------------------------"
+echo "  Downloading starship.toml"
+echo "----------------------------------------"
 mkdir -p ~/.config
 curl -Ls https://raw.githubusercontent.com/rubensdeoliveira/rubinho-env/master/vs-code/step-2-aux-1 -o ~/.config/starship.toml
 
-echo "===== Criando .zshrc final ====="
+echo "----------------------------------------"
+echo "  Creating final .zshrc"
+echo "----------------------------------------"
 cat > ~/.zshrc << 'ENDZSH'
 #
-# Arquivo .zshrc final — Prezto + Starship
+# Final ZSH configuration (Prezto + Starship)
 #
 
-# Carregar Prezto
-if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
-  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+# Load Prezto
+if [[ -s "\${ZDOTDIR:-\$HOME}/.zprezto/init.zsh" ]]; then
+  source "\${ZDOTDIR:-\$HOME}/.zprezto/init.zsh"
 fi
 
-# Iniciar Starship
-eval "$(starship init zsh)"
+# Load Starship prompt
+eval "\$(starship init zsh)"
 ENDZSH
 
-echo "===== CONFIGURAÇÃO CONCLUÍDA ====="
+echo "----------------------------------------"
+echo "  Finished Prezto + Starship Setup"
+echo "----------------------------------------"
+
 EOF
 
-echo "===== Executando script ZSH ====="
+echo "===== Running temporary ZSH script ====="
 $ZSH_BIN "$TMP_ZSH_SCRIPT"
 
-echo "===== Limpando arquivo temporário ====="
+echo "===== Removing temporary script ====="
 rm "$TMP_ZSH_SCRIPT"
 
-echo "===== INSTALAÇÃO COMPLETA ====="
-echo "👉 Rode: source ~/.zshrc"
-echo "👉 Depois faça logout/login para ativar 100%"
-echo "👉 Rode: bash <(curl -Ls https://raw.githubusercontent.com/rubensdeoliveira/rubinho-env/master/vs-code/step-3-dev-stack.sh)"
-
+echo ""
+echo "========================================"
+echo "          INSTALLATION COMPLETE         "
+echo "========================================"
+echo "👉 Run: source ~/.zshrc"
+echo "👉 Logout/Login to finish activation"
+echo "👉 Next script: "
+echo "    bash <(curl -fsSL https://raw.githubusercontent.com/rubensdeoliveira/rubinho-env/master/vs-code/step-3-dev-stack.sh)"
