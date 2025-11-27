@@ -16,10 +16,13 @@ else
 fi
 
 echo "Creating Prezto runcom symlinks..."
-setopt EXTENDED_GLOB 2>/dev/null || true
-for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do
-  ln -sf "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"
+# Use Zsh to create symlinks (Zsh syntax required for glob patterns)
+$ZSH_BIN -c "
+setopt EXTENDED_GLOB
+for rcfile in \"\${ZDOTDIR:-\$HOME}\"/.zprezto/runcoms/^README.md(.N); do
+  ln -sf \"\$rcfile\" \"\${ZDOTDIR:-\$HOME}/.\${rcfile:t}\"
 done
+"
 
 echo "Writing .zpreztorc (module config)..."
 cat > ~/.zpreztorc << 'EOF'
