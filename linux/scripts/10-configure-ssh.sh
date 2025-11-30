@@ -30,9 +30,9 @@ echo "Copying public key to clipboard..."
 cat ~/.ssh/id_ed25519.pub | xclip -sel clip
 
 echo "=============================================="
-echo "============== [12] DONE ===================="
+echo "============== [10] DONE ===================="
 echo "=============================================="
 echo "✅ SSH public key copied to clipboard!"
 echo "   Go to GitHub/GitLab Settings → SSH Keys and paste it."
-echo "▶ Next, run: bash 14-configure-inotify.sh"
+echo "▶ Next, run: bash 11-configure-terminal.sh"
 

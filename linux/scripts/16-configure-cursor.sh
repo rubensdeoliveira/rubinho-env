@@ -3,7 +3,7 @@
 set -e
 
 echo "=============================================="
-echo "========= [15] CONFIGURING CURSOR ============"
+echo "========= [16] CONFIGURING CURSOR ============"
 echo "=============================================="
 
 # Determine Cursor user directory based on OS
@@ -34,10 +34,10 @@ cp "$SCRIPT_DIR/../config/cursor-keyboard.json" "$KEYBINDINGS_PATH"
 echo "→ keybindings.json updated successfully!"
 
 echo "=============================================="
-echo "============== [15] DONE ===================="
+echo "============== [16] DONE ===================="
 echo "=============================================="
 echo "🎉 Cursor configured successfully!"
 echo "   Open Cursor again to apply everything."
 echo ""
-echo "▶ Next, run: bash 16-install-docker.sh (final step)"
+echo "▶ Next, run: bash 17-install-docker.sh (final step)"
 

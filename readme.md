@@ -35,12 +35,11 @@ cd rubinho-env
 ```bash
 cd linux/scripts
 
-# Run all scripts automatically
+# Run all scripts automatically (single command)
 bash 00-install-all.sh
-
-# After closing and reopening the terminal, continue:
-bash 00-install-all-continue.sh
 ```
+
+**Note:** The script will automatically handle environment loading. After completion, simply close and reopen your terminal to ensure all configurations are applied.
 
 ### Manual Installation
 
@@ -50,19 +49,20 @@ cd linux/scripts
 # Run in order:
 bash 01-configure-git.sh
 bash 02-install-zsh.sh          # ⚠️ Close terminal after this
-bash 03-install-prezto.sh
+bash 03-install-zinit.sh
 bash 04-install-starship.sh
-bash 05-install-docker.sh       # ⚠️ Logout/login after this
-bash 06-install-node-nvm.sh
-bash 07-install-yarn.sh
+bash 05-install-node-nvm.sh
+bash 06-install-yarn.sh
+bash 07-install-tools.sh
 bash 08-install-font-jetbrains.sh
 bash 09-install-cursor.sh
 bash 10-configure-keyboard.sh
 bash 11-configure-terminal.sh
 bash 12-configure-ssh.sh
-bash 13-configure-inotify.sh
-bash 14-install-cursor-extensions.sh
-bash 15-configure-cursor.sh
+bash 14-configure-inotify.sh
+bash 15-install-cursor-extensions.sh
+bash 16-configure-cursor.sh
+bash 17-install-docker.sh       # ⚠️ Logout/login after this (final step)
 ```
 
 ---
@@ -74,12 +74,11 @@ bash 15-configure-cursor.sh
 ```bash
 cd macos/scripts
 
-# Run all scripts automatically
+# Run all scripts automatically (single command)
 bash 00-install-all.sh
-
-# After closing and reopening the terminal, continue:
-bash 00-install-all-continue.sh
 ```
+
+**Note:** The script will automatically handle environment loading. After completion, simply close and reopen your terminal to ensure all configurations are applied.
 
 ### Manual Installation
 
@@ -89,14 +88,18 @@ cd macos/scripts
 # Run in order:
 bash 01-configure-git.sh
 bash 02-install-zsh.sh          # ⚠️ Close terminal after this
-bash 03-install-prezto.sh
+bash 03-install-zinit.sh
 bash 04-install-starship.sh
-bash 05-install-docker.sh
-bash 06-install-node-nvm.sh
-bash 07-install-yarn.sh
+bash 05-install-node-nvm.sh
+bash 06-install-yarn.sh
+bash 07-install-tools.sh
 bash 08-install-font-jetbrains.sh
-bash 09-configure-terminal.sh
 bash 10-configure-ssh.sh
+bash 11-configure-file-watchers.sh
+bash 12-install-cursor-extensions.sh
+bash 13-configure-cursor.sh
+bash 14-install-docker.sh
+bash 15-configure-terminal.sh
 bash 11-configure-file-watchers.sh
 bash 12-install-cursor-extensions.sh
 bash 13-configure-cursor.sh
@@ -107,10 +110,11 @@ bash 13-configure-cursor.sh
 ## 📋 Complete Script Listing
 
 ### **00-install-all.sh** (Master Script)
-Runs all installation scripts in sequence.
-- Pauses after script 02 for you to close/open the terminal
-- Pauses after script 05 for you to logout/login
-- Use `00-install-all-continue.sh` to continue after the pauses
+Runs all installation scripts in sequence automatically.
+- Executes scripts 01-17 (Linux) or 01-15 (macOS) in the correct order
+- Automatically loads NVM and environment configurations during installation
+- Handles all setup phases: Initial Setup, Environment Configuration, Development Tools, and Application Setup
+- **Note:** After completion, close and reopen your terminal to ensure all configurations are applied
 
 ---
 
@@ -137,11 +141,10 @@ Installs and configures Zsh as the default shell.
 
 ---
 
-### **03-install-prezto.sh**
-Installs Prezto (framework for Zsh).
-- Clones the Prezto repository
-- Creates symlinks for configuration files
-- Configures Prezto modules
+### **03-install-zinit.sh**
+Installs Zinit (fast Zsh plugin manager).
+- Clones the Zinit repository
+- Sets up plugin management system
 
 ---
 
@@ -149,9 +152,9 @@ Installs Prezto (framework for Zsh).
 Installs and configures the Starship prompt.
 - Installs Starship
 - Copies and configures `starship.toml`
-- Updates `.zshrc` with Prezto + Starship
+- Updates `.zshrc` with Zinit + Starship + tools
 
-**👉 After running:** Run `source ~/.zshrc`
+**Note:** The NVM configuration is automatically added to `.zshrc` and will be available after restart
 
 ---
 

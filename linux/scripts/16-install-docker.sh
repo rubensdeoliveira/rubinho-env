@@ -3,7 +3,7 @@
 set -e
 
 echo "=============================================="
-echo "========= [05] INSTALLING DOCKER ============="
+echo "========= [16] INSTALLING DOCKER ============="
 echo "=============================================="
 
 echo "Updating system..."
@@ -39,8 +39,12 @@ echo "Adding current user to docker group..."
 sudo usermod -aG docker $USER
 
 echo "=============================================="
-echo "============== [05] DONE ===================="
+echo "============== [16] DONE ===================="
 echo "=============================================="
 echo "⚠️  Logout/Login required to use Docker without sudo"
-echo "▶ Next, run: bash 06-install-node-nvm.sh"
+echo ""
+echo "🎉 INSTALLATION COMPLETE!"
+echo "=============================================="
+echo "All scripts have been executed successfully!"
+echo "Restart the terminal to apply all changes."
 

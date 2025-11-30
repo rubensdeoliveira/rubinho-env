@@ -3,7 +3,7 @@
 set -e
 
 echo "=============================================="
-echo "========= [05] INSTALLING DOCKER ============="
+echo "========= [14] INSTALLING DOCKER ============="
 echo "=============================================="
 
 # Check if Homebrew is installed
@@ -36,8 +36,9 @@ else
 fi
 
 echo "=============================================="
-echo "============== [05] DONE ===================="
+echo "============== [14] DONE ===================="
 echo "=============================================="
-echo "⚠️  Make sure Docker Desktop is running before continuing"
-echo "▶ Next, run: bash 06-install-node-nvm.sh"
+echo "⚠️  Make sure Docker Desktop is running"
+echo ""
+echo "▶ Next, run: bash 15-configure-terminal.sh (final step)"
 

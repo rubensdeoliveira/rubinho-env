@@ -3,7 +3,7 @@
 set -e
 
 echo "=============================================="
-echo "========= [13] CONFIGURING INOTIFY ==========="
+echo "========= [14] CONFIGURING INOTIFY ==========="
 echo "=============================================="
 
 echo "Setting inotify max_user_watches..."
@@ -21,7 +21,7 @@ echo "Verifying setting..."
 cat /proc/sys/fs/inotify/max_user_watches
 
 echo "=============================================="
-echo "============== [13] DONE ===================="
+echo "============== [14] DONE ===================="
 echo "=============================================="
-echo "▶ Next, run: bash 14-install-cursor-extensions.sh"
+echo "▶ Next, run: bash 15-install-cursor-extensions.sh"
 

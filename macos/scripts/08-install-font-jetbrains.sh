@@ -34,5 +34,5 @@ echo "You may need to restart your terminal/editor to see the font."
 echo "=============================================="
 echo "============== [08] DONE ===================="
 echo "=============================================="
-echo "▶ Next, run: bash 09-configure-terminal.sh"
+echo "▶ Next, run: bash 10-configure-ssh.sh"
 

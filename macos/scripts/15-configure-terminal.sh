@@ -3,7 +3,7 @@
 set -e
 
 echo "=============================================="
-echo "========= [09] CONFIGURING iTERM2 ==========="
+echo "===== [15] CONFIGURE iTERM2 TERMINAL ========="
 echo "=============================================="
 
 # Check if Homebrew is installed
@@ -30,37 +30,20 @@ if [ "$ITerm2_INSTALLED" = false ]; then
 fi
 
 echo ""
-echo "Downloading Dracula theme for iTerm2..."
+echo "Downloading Catppuccin Mocha theme for iTerm2..."
 
 # Create directory for themes
 THEMES_DIR="$HOME/.iterm2-themes"
 mkdir -p "$THEMES_DIR"
 
-# Clone Dracula theme repository
-DRACULA_DIR="$THEMES_DIR/iterm"
-if [ -d "$DRACULA_DIR" ]; then
-  echo "✓ Dracula theme directory already exists, updating..."
-  cd "$DRACULA_DIR"
-  git pull 2>/dev/null || echo "⚠️  Could not update (not a git repo or no changes)"
+# Download Catppuccin Mocha theme
+CATPPUCCIN_FILE="$THEMES_DIR/catppuccin-mocha.itermcolors"
+if [ ! -f "$CATPPUCCIN_FILE" ]; then
+  echo "Downloading Catppuccin Mocha theme..."
+  curl -fsSL https://raw.githubusercontent.com/catppuccin/iterm/main/colors/catppuccin-mocha.itermcolors -o "$CATPPUCCIN_FILE"
+  echo "✓ Catppuccin Mocha theme downloaded"
 else
-  echo "Cloning Dracula theme repository..."
-  cd "$THEMES_DIR"
-  git clone https://github.com/dracula/iterm.git
-  echo "✓ Dracula theme downloaded"
-fi
-
-DRACULA_FILE="$DRACULA_DIR/Dracula.itermcolors"
-if [ ! -f "$DRACULA_FILE" ]; then
-  echo "⚠️  Dracula.itermcolors not found in cloned repository"
-  echo "   Checking for alternative location..."
-  DRACULA_FILE=$(find "$DRACULA_DIR" -name "*.itermcolors" | head -1)
-fi
-
-if [ -f "$DRACULA_FILE" ]; then
-  echo "✓ Found Dracula theme file: $DRACULA_FILE"
-else
-  echo "❌ Could not find Dracula theme file"
-  exit 1
+  echo "✓ Catppuccin Mocha theme already exists"
 fi
 
 echo ""
@@ -84,10 +67,10 @@ echo ""
 echo "5. In the Colors tab:"
 echo "   • Click 'Color Presets...' (bottom right)"
 echo "   • Click 'Import...'"
-echo "   • Navigate to: $DRACULA_FILE"
+echo "   • Navigate to: $CATPPUCCIN_FILE"
 echo "   • Select the file and click 'Open'"
 echo "   • Click 'Color Presets...' again"
-echo "   • Select 'Dracula' from the list"
+echo "   • Select 'catppuccin-mocha' from the list"
 echo ""
 echo "6. Click 'Other Actions...' (at the bottom)"
 echo "   • Select 'Set as Default'"
@@ -95,6 +78,11 @@ echo ""
 echo "7. Close Preferences and restart iTerm2 (⌘Q)"
 echo ""
 echo "=============================================="
-echo "============== [09] DONE ===================="
+echo "============== [15] DONE ===================="
 echo "=============================================="
-echo "▶ Next, run: bash 10-configure-ssh.sh"
+echo ""
+echo "🎉 INSTALLATION COMPLETE!"
+echo "=============================================="
+echo "All scripts have been executed successfully!"
+echo "Restart the terminal to apply all changes."
+

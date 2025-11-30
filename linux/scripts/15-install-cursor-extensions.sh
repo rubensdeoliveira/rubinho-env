@@ -3,7 +3,7 @@
 set -e
 
 echo "=============================================="
-echo "========= [14] INSTALLING CURSOR EXTENSIONS ==="
+echo "========= [15] INSTALLING CURSOR EXTENSIONS ==="
 echo "=============================================="
 
 # Find the correct cursor executable
@@ -61,7 +61,7 @@ echo ""
 echo "All extensions attempted."
 
 echo "=============================================="
-echo "============== [14] DONE ===================="
+echo "============== [15] DONE ===================="
 echo "=============================================="
-echo "▶ Next, run: bash 15-configure-cursor.sh"
+echo "▶ Next, run: bash 16-configure-cursor.sh"
 

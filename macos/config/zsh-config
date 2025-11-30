@@ -1,64 +1,85 @@
-#
-# ==========================
-#  ZSH MAIN CONFIGURATION
-# ==========================
-#
+# ===============================
+# UNIVERSAL ZSH CONFIG (MAC + LINUX)
+# ===============================
 
-# Load Prezto (shell framework)
-if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
-  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+# PATH default (macOS)
+export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
+
+# Add Homebrew to PATH
+if [[ -d "/opt/homebrew/bin" ]]; then
+  export PATH="/opt/homebrew/bin:$PATH"
+elif [[ -d "/usr/local/bin" ]]; then
+  export PATH="/usr/local/bin:$PATH"
 fi
 
-# Disable Prezto default prompt to use Starship
-zstyle ':prezto:module:prompt' theme 'off'
+# Detect OS (mac / linux)
+case "$OSTYPE" in
+  darwin*) export OS="mac";;
+  linux*)  export OS="linux";;
+esac
 
-# Initialize Starship
-eval "$(starship init zsh)"
+### -------------------------------
+### ZINIT (Fast plugin manager)
+### -------------------------------
+if [[ ! -f ~/.zinit/bin/zinit.zsh ]]; then
+  mkdir -p ~/.zinit
+  git clone https://github.com/zdharma-continuum/zinit.git ~/.zinit/bin
+fi
 
-#
-# ======================
-#  ENVIRONMENT VARIABLES
-# ======================
-#
+source ~/.zinit/bin/zinit.zsh
 
-# 🔹 Add your custom environment variables here
-# export MY_VARIABLE="value"
-# export ANOTHER="value"
+### -------------------------------
+### PLUGINS (fast load)
+### -------------------------------
+zinit light zsh-users/zsh-autosuggestions
+zinit light zsh-users/zsh-completions
 
-#
-# NVM (Node Version Manager)
-#
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-[ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
+# Syntax highlighting MUST be last
+SYNTAX_PLUGIN="zsh-users/zsh-syntax-highlighting"
 
-#
-# Other variables and tools
-#
-[ -f "$HOME/.local/bin/env" ] && . "$HOME/.local/bin/env"
+### -------------------------------
+### ZOXIDE (smart cd)
+### -------------------------------
+eval "$(zoxide init zsh)"
 
-#
-# ======================
-#  ALIASES AND SHORTCUTS
-# ======================
-#
+### -------------------------------
+### FZF (universal configs)
+### -------------------------------
+export FZF_DEFAULT_COMMAND='fd --type f'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_ALT_C_COMMAND='fd --type d'
 
+### -------------------------------
+### ALIASES
+### -------------------------------
+alias ls='lsd'
+alias cat='bat'
+alias g='git'
+alias lg='lazygit'
 alias dev='cd ~/dev'
-alias reload='source ~/.zshrc && echo "🔁 zshrc reloaded!"'
+alias c='clear'
+alias reload='source ~/.zshrc'
 
-#
-# =============================
-#  SPECIFIC WORKFLOW FUNCTIONS
-# =============================
-#
+### -------------------------------
+### QUALITY OF LIFE
+### -------------------------------
+setopt autocd
+setopt interactive_comments
+setopt correct
 
-function runProject() {
-  cd ~/dev/$1
-  yarn dev
-}
+### -------------------------------
+### LOAD SYNTAX HIGHLIGHTING LAST
+### -------------------------------
+zinit light $SYNTAX_PLUGIN
 
-#
-# ==========================
-#  END OF FILE
-# ==========================
-#
+### -------------------------------
+### NVM (Node Version Manager)
+### -------------------------------
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+
+### -------------------------------
+### STARSHIP (prompt)
+### -------------------------------
+eval "$(starship init zsh)"

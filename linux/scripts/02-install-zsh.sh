@@ -48,5 +48,5 @@ echo "=============================================="
 echo "============== [02] DONE ===================="
 echo "=============================================="
 echo "⚠️  Please close the terminal and open it again."
-echo "▶ Next, run: bash 03-install-prezto.sh"
+echo "▶ Next, run: bash 03-install-zinit.sh"
 

@@ -14,27 +14,15 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 mkdir -p ~/.config
 cp "$SCRIPT_DIR/../config/starship.toml" ~/.config/starship.toml
 
-echo "Updating .zshrc with Prezto + Starship + custom config..."
-# Copy the complete zsh-config which already includes Prezto and Starship
+echo "Updating .zshrc with Zinit + Starship + custom config..."
+# Copy the complete zsh-config which includes Zinit and Starship
 if [ -f "$SCRIPT_DIR/../config/zsh-config" ]; then
-  cp "$SCRIPT_DIR/../config/zsh-config" ~/.zshrc
-  echo "✓ zsh-config copied successfully"
+  cat "$SCRIPT_DIR/../config/zsh-config" > ~/.zshrc
+  echo "✓ zsh-config applied successfully"
 else
-  echo "⚠ zsh-config not found, using fallback configuration"
+  echo "⚠️  zsh-config not found, using fallback configuration"
   # Fallback if file doesn't exist
-  cat > ~/.zshrc << 'EOF'
-#
-# Final ZSH configuration (Prezto + Starship)
-#
-
-# Load Prezto
-if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
-  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
-fi
-
-# Disable Prezto default prompt to use Starship
-zstyle ':prezto:module:prompt' theme 'off'
-
+  cat >> ~/.zshrc << 'EOF'
 # Load Starship prompt
 eval "$(starship init zsh)"
 EOF
@@ -43,6 +31,5 @@ fi
 echo "=============================================="
 echo "============== [04] DONE ===================="
 echo "=============================================="
-echo "👉 Run: source ~/.zshrc"
-echo "▶ Next, run: bash 05-install-docker.sh"
+echo "▶ Next, run: bash 05-install-node-nvm.sh"
 
