@@ -72,14 +72,14 @@ bash 06-install-yarn.sh
 bash 07-install-tools.sh
 bash 08-install-font-jetbrains.sh
 bash 09-install-cursor.sh
-bash 11-configure-terminal.sh
-bash 12-configure-ssh.sh
-bash 13-configure-inotify.sh
-bash 14-install-cursor-extensions.sh
-bash 15-configure-cursor.sh
-bash 16-install-docker.sh       # ⚠️ Logout/login after this
-bash 17-install-insomnia.sh
-bash 18-install-heidisql.sh
+bash 10-configure-terminal.sh
+bash 11-configure-ssh.sh
+bash 12-configure-inotify.sh
+bash 13-install-cursor-extensions.sh
+bash 14-configure-cursor.sh
+bash 15-install-docker.sh       # ⚠️ Logout/login after this
+bash 16-install-insomnia.sh
+bash 17-install-heidisql.sh
 ```
 
 ### Work Environment (Optional)
@@ -594,7 +594,7 @@ Configures iTerm2 with Dracula theme.
 
 ---
 
-### **11-configure-terminal.sh** (Linux only)
+### **10-configure-terminal.sh** (Linux only)
 Configures GNOME Terminal with Dracula theme.
 - Installs dconf-cli
 - Creates "rubinho" profile in GNOME Terminal
@@ -604,7 +604,7 @@ Configures GNOME Terminal with Dracula theme.
 
 ---
 
-### **12-configure-ssh.sh** (Linux only)
+### **11-configure-ssh.sh** (Linux only)
 Configures SSH for Git.
 - Installs Git and OpenSSH
 - Uses Git email from environment or prompts for it
@@ -638,7 +638,7 @@ Configures file watcher limits for macOS.
 - Adjusts system limits for file watching
 - Applies changes
 
-### **13-configure-inotify.sh** (Linux only)
+### **12-configure-inotify.sh** (Linux only)
 Configures inotify limits for file watching.
 - Increases `max_user_watches` to 524288
 - Makes the configuration persistent
@@ -646,7 +646,7 @@ Configures inotify limits for file watching.
 
 ---
 
-### **14-install-cursor-extensions.sh**
+### **13-install-cursor-extensions.sh**
 Installs essential Cursor extensions.
 - Color Highlight
 - DotENV
@@ -663,7 +663,7 @@ Installs essential Cursor extensions.
 
 ---
 
-### **15-configure-cursor.sh**
+### **14-configure-cursor.sh**
 Applies Cursor configurations.
 - Copies `settings.json` to Cursor
 - Copies `keybindings.json` to Cursor
@@ -673,7 +673,7 @@ Applies Cursor configurations.
 
 ---
 
-### **16-install-docker.sh** (Linux only)
+### **15-install-docker.sh** (Linux only)
 Installs Docker and Docker Compose.
 - Removes old Docker installations
 - Adds official Docker repository
@@ -693,7 +693,7 @@ Installs Docker Desktop for macOS.
 
 ---
 
-### **17-install-insomnia.sh** (Linux only)
+### **16-install-insomnia.sh** (Linux only)
 Installs Insomnia REST Client for Linux.
 - Adds Insomnia repository
 - Installs via apt
@@ -703,7 +703,7 @@ Installs Insomnia REST Client for Linux.
 
 ---
 
-### **18-install-heidisql.sh** (Linux only)
+### **17-install-heidisql.sh** (Linux only)
 Installs HeidiSQL for Linux.
 - Official HeidiSQL Linux version (64-bit .deb package)
 - Supports MySQL, MariaDB, PostgreSQL, SQLite, and more

@@ -40,5 +40,5 @@ echo "============== [14] DONE ===================="
 echo "=============================================="
 echo "⚠️  Make sure Docker Desktop is running"
 echo ""
-echo "▶ Next, run: bash 15-configure-terminal.sh (final step)"
+echo "▶ Next, run: bash 14-configure-terminal.sh (final step)"
 

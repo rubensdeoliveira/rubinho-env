@@ -69,5 +69,5 @@ echo "=============================================="
 echo "============== [22] DONE ===================="
 echo "=============================================="
 echo "⚠️  Restart terminal or run: source ~/.zshrc"
-echo "▶ Next, run: bash 23-configure-github-token.sh"
+echo "▶ Next, run: bash 21-configure-github-token.sh"
 

@@ -34,22 +34,8 @@ else
   fi
 fi
 
-# Use provided name or prompt for terminal profile name
-if [ -z "$GIT_USER_NAME" ]; then
-    read -p "Enter a name for your terminal profile (or press Enter for 'Developer'): " TERMINAL_PROFILE_NAME
-    if [ -z "$TERMINAL_PROFILE_NAME" ]; then
-        TERMINAL_PROFILE_NAME="Developer"
-    fi
-else
-    # Use first name or username from Git name
-    TERMINAL_PROFILE_NAME=$(echo "$GIT_USER_NAME" | awk '{print $1}' | tr '[:upper:]' '[:lower:]')
-    if [ -z "$TERMINAL_PROFILE_NAME" ]; then
-        TERMINAL_PROFILE_NAME="Developer"
-    fi
-fi
-
 echo ""
-echo "Creating new GNOME Terminal profile: $TERMINAL_PROFILE_NAME..."
+echo "Creating new GNOME Terminal profile: rubinho..."
 NEW_PROFILE_ID=$(uuidgen)
 
 # Add to GNOME Terminal list
@@ -59,7 +45,7 @@ gsettings set org.gnome.Terminal.ProfilesList list "$NEW_LIST"
 
 PROFILE_KEY="/org/gnome/terminal/legacy/profiles:/:$NEW_PROFILE_ID/"
 
-dconf write "${PROFILE_KEY}visible-name" "'$TERMINAL_PROFILE_NAME'"
+dconf write "${PROFILE_KEY}visible-name" "'rubinho'"
 dconf write "${PROFILE_KEY}use-system-font" "false"
 dconf write "${PROFILE_KEY}font" "'JetBrainsMono Nerd Font 13'"
 dconf write "${PROFILE_KEY}use-theme-colors" "false"
@@ -67,7 +53,7 @@ dconf write "${PROFILE_KEY}foreground-color" "'#f8f8f2'"
 dconf write "${PROFILE_KEY}background-color" "'#282a36'"
 dconf write "${PROFILE_KEY}palette" "['#000000', '#ff5555', '#50fa7b', '#f1fa8c', '#bd93f9', '#ff79c6', '#8be9fd', '#bbbbbb', '#44475a', '#ff6e6e', '#69ff94', '#ffffa5', '#d6caff', '#ff92df', '#a6f0ff', '#ffffff']"
 
-echo "Setting $TERMINAL_PROFILE_NAME as default profile..."
+echo "Setting rubinho as default profile..."
 gsettings set org.gnome.Terminal.ProfilesList default "'$NEW_PROFILE_ID'"
 
 echo "Cleaning up old profiles..."
@@ -87,5 +73,5 @@ echo "Profile successfully applied."
 echo "=============================================="
 echo "============== [11] DONE ===================="
 echo "=============================================="
-echo "▶ Next, run: bash 12-configure-ssh.sh"
+echo "▶ Next, run: bash 11-configure-ssh.sh"
 

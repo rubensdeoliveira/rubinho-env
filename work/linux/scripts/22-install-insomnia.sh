@@ -47,5 +47,5 @@ fi
 echo "=============================================="
 echo "============== [24] DONE ===================="
 echo "=============================================="
-echo "▶ Next, run: bash 25-install-heidisql.sh"
+echo "▶ Next, run: bash 23-install-heidisql.sh"
 

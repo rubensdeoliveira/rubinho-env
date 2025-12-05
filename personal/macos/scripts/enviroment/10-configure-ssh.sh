@@ -39,5 +39,5 @@ echo "============== [10] DONE ===================="
 echo "=============================================="
 echo "✅ SSH public key copied to clipboard!"
 echo "   Go to GitHub/GitLab Settings → SSH Keys and paste it."
-echo "▶ Next, run: bash 11-configure-file-watchers.sh"
+echo "▶ Next, run: bash 10-configure-file-watchers.sh"
 

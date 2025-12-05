@@ -52,7 +52,7 @@ else
     echo "   6. Copy the token (you won't see it again!)"
     echo ""
     echo "💡 Tip: You can also pass the token as argument:"
-    echo "   bash 22-configure-github-token.sh YOUR_TOKEN"
+    echo "   bash 21-configure-github-token.sh YOUR_TOKEN"
     echo ""
     read -p "Enter your GitHub token (or press Enter to skip): " GITHUB_TOKEN_INPUT
 fi

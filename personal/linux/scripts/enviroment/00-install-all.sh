@@ -131,14 +131,14 @@ echo "=============================================="
 # Part 4: Applications and configuration
 scripts=(
   "09-install-cursor.sh"
-  "11-configure-terminal.sh"
-  "12-configure-ssh.sh"
-  "13-configure-inotify.sh"
-  "14-install-cursor-extensions.sh"
-  "15-configure-cursor.sh"
-  "16-install-docker.sh"
-  "17-install-insomnia.sh"
-  "18-install-heidisql.sh"
+  "10-configure-terminal.sh"
+  "11-configure-ssh.sh"
+  "12-configure-inotify.sh"
+  "13-install-cursor-extensions.sh"
+  "14-configure-cursor.sh"
+  "15-install-docker.sh"
+  "16-install-insomnia.sh"
+  "17-install-heidisql.sh"
 )
 
 for script in "${scripts[@]}"; do

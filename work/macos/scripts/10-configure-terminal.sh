@@ -87,5 +87,5 @@ echo "Profile successfully applied."
 echo "=============================================="
 echo "============== [11] DONE ===================="
 echo "=============================================="
-echo "▶ Next, run: bash 12-configure-ssh.sh"
+echo "▶ Next, run: bash 11-configure-ssh.sh"
 

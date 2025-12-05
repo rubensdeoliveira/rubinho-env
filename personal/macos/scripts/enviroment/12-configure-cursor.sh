@@ -39,5 +39,5 @@ echo "=============================================="
 echo "🎉 Cursor configured successfully!"
 echo "   Open Cursor again to apply everything."
 echo ""
-echo "▶ Next, run: bash 14-install-docker.sh"
+echo "▶ Next, run: bash 13-install-docker.sh"
 

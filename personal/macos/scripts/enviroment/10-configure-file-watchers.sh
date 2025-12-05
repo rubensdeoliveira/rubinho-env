@@ -34,5 +34,5 @@ echo "Or add it to your .zshrc if you experience file watching issues"
 echo "=============================================="
 echo "============== [11] DONE ===================="
 echo "=============================================="
-echo "▶ Next, run: bash 12-install-cursor-extensions.sh"
+echo "▶ Next, run: bash 11-install-cursor-extensions.sh"
 

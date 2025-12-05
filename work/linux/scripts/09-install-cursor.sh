@@ -107,5 +107,5 @@ fi
 echo "=============================================="
 echo "============== [09] DONE ===================="
 echo "=============================================="
-echo "▶ Next, run: bash 11-configure-terminal.sh"
+echo "▶ Next, run: bash 10-configure-terminal.sh"
 

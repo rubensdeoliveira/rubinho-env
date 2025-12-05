@@ -69,5 +69,5 @@ fi
 echo "=============================================="
 echo "============== [19] DONE ===================="
 echo "=============================================="
-echo "▶ Next, run: bash 20-configure-aws-sso.sh"
+echo "▶ Next, run: bash 18-configure-aws-sso.sh"
 

@@ -130,14 +130,13 @@ echo "=============================================="
 
 # Part 4: Applications and configuration
 scripts=(
-  "10-configure-ssh.sh"
-  "11-configure-file-watchers.sh"
-  "12-install-cursor-extensions.sh"
-  "13-configure-cursor.sh"
-  "14-install-docker.sh"
-  "15-configure-terminal.sh"
-  "16-install-insomnia.sh"
-  "17-install-tableplus.sh"
+  "10-configure-file-watchers.sh"
+  "11-install-cursor-extensions.sh"
+  "12-configure-cursor.sh"
+  "13-install-docker.sh"
+  "14-configure-terminal.sh"
+  "15-install-insomnia.sh"
+  "16-install-tableplus.sh"
 )
 
 for script in "${scripts[@]}"; do

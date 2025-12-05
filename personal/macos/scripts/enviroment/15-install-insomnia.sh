@@ -31,5 +31,5 @@ fi
 echo "=============================================="
 echo "============== [22] DONE ===================="
 echo "=============================================="
-echo "▶ Next, run: bash 17-install-tableplus.sh"
+echo "▶ Next, run: bash 16-install-tableplus.sh"
 

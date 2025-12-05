@@ -3,13 +3,13 @@
 set -e
 
 echo "=============================================="
-echo "========= [12] INSTALLING CURSOR EXTENSIONS ==="
+echo "========= [14] INSTALLING CURSOR EXTENSIONS ==="
 echo "=============================================="
 
 # Find the correct cursor executable
 CURSOR_CMD=""
 if command -v cursor &> /dev/null; then
-  # Check if the cursor command is actually executable
+  # Check if the cursor command is actually executable (not XML error)
   if cursor --version &> /dev/null; then
     CURSOR_CMD="cursor"
   fi
@@ -17,18 +17,19 @@ fi
 
 # Try alternative paths if cursor command doesn't work
 if [ -z "$CURSOR_CMD" ]; then
-  if [ -f "/Applications/Cursor.app/Contents/Resources/app/bin/cursor" ] && \
-     /Applications/Cursor.app/Contents/Resources/app/bin/cursor --version &> /dev/null; then
-    CURSOR_CMD="/Applications/Cursor.app/Contents/Resources/app/bin/cursor"
-  elif [ -f "/Applications/Cursor.app/Contents/MacOS/Cursor" ] && \
-       /Applications/Cursor.app/Contents/MacOS/Cursor --version &> /dev/null; then
-    CURSOR_CMD="/Applications/Cursor.app/Contents/MacOS/Cursor"
+  if [ -f "/usr/share/cursor/bin/cursor" ] && /usr/share/cursor/bin/cursor --version &> /dev/null; then
+    CURSOR_CMD="/usr/share/cursor/bin/cursor"
+  elif [ -f "/usr/share/cursor/cursor" ] && /usr/share/cursor/cursor --version &> /dev/null; then
+    CURSOR_CMD="/usr/share/cursor/cursor"
+  elif [ -f "/opt/cursor/cursor" ] && /opt/cursor/cursor --version &> /dev/null; then
+    CURSOR_CMD="/opt/cursor/cursor"
   fi
 fi
 
 if [ -z "$CURSOR_CMD" ]; then
   echo "❌ Cursor is not installed or not found"
-  echo "   Please install Cursor manually from: https://cursor.sh"
+  echo "   Please install Cursor first by running: bash 09-install-cursor.sh"
+  echo "   Or install it manually from: https://cursor.sh"
   exit 1
 fi
 
@@ -60,7 +61,7 @@ echo ""
 echo "All extensions attempted."
 
 echo "=============================================="
-echo "============== [12] DONE ===================="
+echo "============== [14] DONE ===================="
 echo "=============================================="
-echo "▶ Next, run: bash 13-configure-cursor.sh"
+echo "▶ Next, run: bash 14-configure-cursor.sh"
 

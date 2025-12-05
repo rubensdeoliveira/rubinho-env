@@ -63,5 +63,5 @@ echo "All extensions attempted."
 echo "=============================================="
 echo "============== [15] DONE ===================="
 echo "=============================================="
-echo "▶ Next, run: bash 15-configure-cursor.sh"
+echo "▶ Next, run: bash 14-configure-cursor.sh"
 
